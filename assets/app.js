@@ -347,7 +347,7 @@
   /* ---------- For the people who open the console ---------- */
 
   console.log([
-    '  /\\_/\\   LeeuwOS 1.0 "Water Polo"',
+    '  /\\_/\\   LeeuwOS 1.0 "Waterpolo"',
     ' ( o.o )  no frameworks, no trackers, no cookies.',
     '  > ^ <   reading source code counts as a site visit.',
     '',
