@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>System Error — LeeuwOS</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root {
+      --cream: #F2EEE3; --paper: #FBF8F0; --ink: #16130E; --accent: #FF4F00;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Geneva", "Verdana", "Tahoma", "DejaVu Sans", sans-serif;
+      font-size: 13px; color: var(--ink);
+      background-color: var(--cream);
+      background-image: radial-gradient(rgba(22,19,14,0.16) 1px, transparent 1.2px);
+      background-size: 26px 26px;
+      padding: 20px;
+    }
+    .dialog {
+      width: min(440px, 100%);
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 24px;
+    }
+    .row { display: flex; gap: 18px; align-items: flex-start; }
+    .bomb { flex: none; width: 44px; height: 44px; }
+    p { font-family: ui-monospace, "Menlo", "Consolas", "Liberation Mono", monospace; line-height: 1.7; }
+    .code { color: var(--accent); font-weight: 700; }
+    .buttons { display: flex; justify-content: flex-end; margin-top: 22px; }
+    a.btn {
+      display: inline-block;
+      font-weight: 700; font-size: 12.5px; text-decoration: none;
+      color: var(--cream); background: var(--ink);
+      border: 2px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      padding: 7px 18px;
+    }
+    a.btn:hover { background: var(--accent); }
+    a.btn:active { translate: 2px 2px; box-shadow: 1px 1px 0 var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="dialog" role="alertdialog" aria-label="System error 404">
+    <div class="row">
+      <svg class="bomb" viewBox="0 0 16 16" aria-hidden="true">
+        <circle cx="7" cy="10" r="5" fill="#16130E"/>
+        <rect x="8" y="3" width="3" height="3" fill="#16130E"/>
+        <path d="M11.5 3.5 13 2" stroke="#FF4F00" stroke-width="1.5" fill="none"/>
+        <path d="M13 2l.7-.7M13.4 2.8l1-.2M12.4 1.4l-.2-1" stroke="#FF4F00" fill="none"/>
+        <circle cx="5.5" cy="8.5" r="1" fill="#FBF8F0"/>
+      </svg>
+      <p>Sorry, a system error occurred.<br>
+      <span class="code">ERROR 404: FILE NOT FOUND.</span><br>
+      The file you are looking for was moved, deleted, or never existed in the first place.</p>
+    </div>
+    <div class="buttons"><a class="btn" href="/">Restart</a></div>
+  </div>
+</body>
+</html>
