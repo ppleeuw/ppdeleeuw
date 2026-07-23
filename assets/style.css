@@ -320,7 +320,16 @@ a { color: inherit; }
 .filerow__name {
   display: flex; align-items: center; gap: 8px;
   font-weight: 700; font-family: var(--font-mono); font-size: 12px;
+  text-decoration: none;
 }
+.filerow__name:hover { text-decoration: underline; }
+.filerow__press {
+  display: block; margin-top: 5px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.filerow__press a { color: inherit; }
+.filerow:hover .filerow__press { color: var(--accent-soft); }
 .filerow__name .pix { width: 22px; height: 22px; flex: none; }
 .filerow__kind { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--accent); }
 .filerow:hover .filerow__kind { color: var(--accent-soft); }
