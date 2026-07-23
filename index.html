@@ -3,57 +3,383 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Peter-Paul de Leeuw</title>
-  <meta name="description" content="Personal website of Peter-Paul de Leeuw.">
-  <style>
-    :root {
-      --bg: #0f1115;
-      --fg: #e8eaed;
-      --muted: #9aa0a6;
-      --accent: #6ea8fe;
-    }
-    @media (prefers-color-scheme: light) {
-      :root { --bg: #fbfbfd; --fg: #1a1a1a; --muted: #5f6368; --accent: #1a73e8; }
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-    main {
-      max-width: 40rem;
-      padding: 2rem;
-      text-align: center;
-    }
-    h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 0 0 0.5rem; letter-spacing: -0.02em; }
-    p.tagline { color: var(--muted); font-size: 1.125rem; margin: 0 0 2rem; }
-    nav { display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
-    nav a { color: var(--accent); text-decoration: none; font-weight: 500; }
-    nav a:hover { text-decoration: underline; }
-    .badge {
-      display: inline-block; margin-top: 2.5rem; font-size: 0.8rem;
-      color: var(--muted); border: 1px solid var(--muted); border-radius: 999px;
-      padding: 0.25rem 0.75rem; opacity: 0.7;
-    }
-  </style>
+  <title>Peter-Paul de Leeuw — LeeuwOS</title>
+  <meta name="description" content="Founder (Amberscript, Blue Health, Heritage View Capital) working on generative AI in the enterprise. Boot LeeuwOS, click around. Do not open CONFIDENTIAL.">
+  <link rel="canonical" href="https://ppdeleeuw.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Peter-Paul de Leeuw — LeeuwOS">
+  <meta property="og:description" content="A very small operating system about a founder who believes AI will change how we work and live. Do not open CONFIDENTIAL.">
+  <meta property="og:url" content="https://ppdeleeuw.com/">
+  <meta property="og:image" content="https://ppdeleeuw.com/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" fill="%23FF4F00"/><rect x="2" y="2" width="2" height="2" fill="%23F2EEE3"/><rect x="12" y="2" width="2" height="2" fill="%23F2EEE3"/><rect x="4" y="4" width="8" height="8" fill="%23FFB38A"/><rect x="6" y="6" width="1" height="2" fill="%2316130E"/><rect x="9" y="6" width="1" height="2" fill="%2316130E"/><rect x="7" y="9" width="2" height="1" fill="%2316130E"/><rect x="6" y="10" width="4" height="1" fill="%2316130E"/></svg>'>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <main>
-    <h1>Peter-Paul de Leeuw</h1>
-    <p class="tagline">Welcome — this site is under construction.</p>
-    <nav>
-      <a href="mailto:peterpaul.deleeuw@gmail.com">Email</a>
-      <a href="https://github.com/ppleeuw">GitHub</a>
+
+  <!-- Pixel icon sprite -->
+  <svg id="sprite" xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="i-folder" viewBox="0 0 16 16">
+      <rect x="1.5" y="2.5" width="6" height="3" fill="var(--paper)" stroke="currentColor"/>
+      <rect x="1.5" y="4.5" width="13" height="9" fill="var(--paper)" stroke="currentColor"/>
+      <line x1="1.5" y1="6.5" x2="14.5" y2="6.5" stroke="currentColor"/>
+    </symbol>
+    <symbol id="i-folder-lock" viewBox="0 0 16 16">
+      <rect x="1.5" y="2.5" width="6" height="3" fill="var(--paper)" stroke="currentColor"/>
+      <rect x="1.5" y="4.5" width="13" height="9" fill="var(--paper)" stroke="currentColor"/>
+      <line x1="1.5" y1="6.5" x2="14.5" y2="6.5" stroke="currentColor"/>
+      <rect x="6.5" y="8.5" width="5" height="4" fill="var(--accent)" stroke="currentColor"/>
+      <path d="M7.5 8.5v-1a1.5 1.5 0 0 1 3 0v1" fill="none" stroke="currentColor"/>
+    </symbol>
+    <symbol id="i-doc" viewBox="0 0 16 16">
+      <path d="M3.5 1.5h7l3 3v10h-10z" fill="var(--paper)" stroke="currentColor"/>
+      <path d="M10.5 1.5v3h3" fill="none" stroke="currentColor"/>
+      <line x1="5.5" y1="7.5" x2="11.5" y2="7.5" stroke="currentColor"/>
+      <line x1="5.5" y1="9.5" x2="11.5" y2="9.5" stroke="currentColor"/>
+      <line x1="5.5" y1="11.5" x2="9.5" y2="11.5" stroke="currentColor"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 16 16">
+      <rect x="1.5" y="3.5" width="13" height="9" fill="var(--paper)" stroke="currentColor"/>
+      <path d="M1.5 3.5 8 9l6.5-5.5" fill="none" stroke="currentColor"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 16 16">
+      <rect x="6.5" y="1.5" width="3" height="1" fill="none" stroke="currentColor"/>
+      <line x1="2.5" y1="3.5" x2="13.5" y2="3.5" stroke="currentColor"/>
+      <path d="M3.5 3.5h9l-1 11h-7z" fill="var(--paper)" stroke="currentColor"/>
+      <line x1="6" y1="6" x2="6.4" y2="12" stroke="currentColor"/>
+      <line x1="8" y1="6" x2="8" y2="12" stroke="currentColor"/>
+      <line x1="10" y1="6" x2="9.6" y2="12" stroke="currentColor"/>
+    </symbol>
+    <symbol id="i-mac" viewBox="0 0 16 16">
+      <rect x="2.5" y="1.5" width="11" height="11" fill="var(--paper)" stroke="currentColor"/>
+      <rect x="4.5" y="3.5" width="7" height="5" fill="var(--paper)" stroke="currentColor"/>
+      <line x1="4.5" y1="10.5" x2="7.5" y2="10.5" stroke="currentColor"/>
+      <rect x="5.5" y="12.5" width="5" height="2" fill="var(--paper)" stroke="currentColor"/>
+    </symbol>
+    <symbol id="i-lion" viewBox="0 0 16 16">
+      <rect x="2" y="2" width="12" height="12" fill="var(--accent)"/>
+      <rect x="2" y="2" width="2" height="2" fill="var(--cream)"/>
+      <rect x="12" y="2" width="2" height="2" fill="var(--cream)"/>
+      <rect x="2" y="12" width="2" height="2" fill="var(--cream)"/>
+      <rect x="12" y="12" width="2" height="2" fill="var(--cream)"/>
+      <rect x="4" y="4" width="8" height="8" fill="#FFB38A"/>
+      <rect x="6" y="6" width="1" height="2" fill="var(--ink)"/>
+      <rect x="9" y="6" width="1" height="2" fill="var(--ink)"/>
+      <rect x="7" y="9" width="2" height="1" fill="var(--ink)"/>
+      <rect x="6" y="10" width="4" height="1" fill="var(--ink)"/>
+    </symbol>
+    <symbol id="i-warn" viewBox="0 0 16 16">
+      <path d="M8 1.5 15 14.5H1z" fill="var(--paper)" stroke="currentColor"/>
+      <rect x="7.25" y="6" width="1.5" height="4" fill="currentColor"/>
+      <rect x="7.25" y="11.5" width="1.5" height="1.5" fill="currentColor"/>
+    </symbol>
+  </svg>
+
+  <!-- Boot screen -->
+  <div id="boot" aria-hidden="true">
+    <pre id="boot-text"></pre>
+    <p id="boot-skip">PRESS ANY KEY TO SKIP</p>
+  </div>
+
+  <!-- Menu bar -->
+  <header id="menubar">
+    <nav class="menus" aria-label="System menus">
+      <div class="menu">
+        <button class="menu__btn menu__btn--logo" aria-haspopup="true" aria-expanded="false">
+          <svg class="pix" width="18" height="18" aria-hidden="true"><use href="#i-lion"/></svg>
+          <span class="sr-only">LeeuwOS menu</span>
+        </button>
+        <ul class="menu__list" role="menu">
+          <li><button role="menuitem" data-open="win-about">About LeeuwOS&hellip;</button></li>
+          <li><a role="menuitem" href="https://github.com/ppleeuw/ppdeleeuw" target="_blank" rel="noopener">View Source (GitHub)</a></li>
+          <li class="menu__rule" role="separator"></li>
+          <li><button role="menuitem" data-action="restart">Restart</button></li>
+        </ul>
+      </div>
+      <div class="menu menu--desktop-only">
+        <button class="menu__btn" aria-haspopup="true" aria-expanded="false">File</button>
+        <ul class="menu__list" role="menu">
+          <li><button role="menuitem" data-open="win-readme">Open README.TXT</button></li>
+          <li><button role="menuitem" data-open="win-career">Open CAREER.DOC</button></li>
+          <li><button role="menuitem" data-open="win-built">Open THINGS I BUILT</button></li>
+          <li><button role="menuitem" data-open="win-agi">Open AGI</button></li>
+          <li><button role="menuitem" data-open="win-contact">Open CONTACT</button></li>
+          <li><button role="menuitem" data-open="win-confidential">Open CONFIDENTIAL&hellip;</button></li>
+          <li class="menu__rule" role="separator"></li>
+          <li><button role="menuitem" data-action="close-front">Close Front Window</button></li>
+        </ul>
+      </div>
+      <div class="menu menu--desktop-only">
+        <button class="menu__btn" aria-haspopup="true" aria-expanded="false">View</button>
+        <ul class="menu__list" role="menu">
+          <li><button role="menuitem" data-action="cleanup">Clean Up Icons</button></li>
+          <li><button role="menuitem" data-action="scanlines">Toggle Scanlines</button></li>
+        </ul>
+      </div>
+      <div class="menu menu--desktop-only">
+        <button class="menu__btn" aria-haspopup="true" aria-expanded="false">Special</button>
+        <ul class="menu__list" role="menu">
+          <li><button role="menuitem" data-action="trash">Empty Trash&hellip;</button></li>
+          <li><a role="menuitem" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener">Do Not Click</a></li>
+        </ul>
+      </div>
     </nav>
-    <div class="badge">Placeholder &middot; full site coming soon</div>
+    <div id="menubar-right">
+      <span id="clock" aria-label="Clock">--:--</span>
+    </div>
+  </header>
+
+  <!-- Desktop -->
+  <main id="desktop">
+
+    <!-- Icons -->
+    <button class="icon" id="icon-readme" data-open="win-readme">
+      <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+      <span class="icon__label">README.TXT</span>
+    </button>
+    <button class="icon" id="icon-career" data-open="win-career">
+      <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+      <span class="icon__label">CAREER.DOC</span>
+    </button>
+    <button class="icon" id="icon-agi" data-open="win-agi">
+      <svg class="pix" aria-hidden="true"><use href="#i-folder"/></svg>
+      <span class="icon__label">AGI</span>
+    </button>
+    <button class="icon" id="icon-built" data-open="win-built">
+      <svg class="pix" aria-hidden="true"><use href="#i-folder"/></svg>
+      <span class="icon__label">THINGS I BUILT</span>
+    </button>
+    <button class="icon" id="icon-contact" data-open="win-contact">
+      <svg class="pix" aria-hidden="true"><use href="#i-mail"/></svg>
+      <span class="icon__label">CONTACT</span>
+    </button>
+    <button class="icon icon--classified" id="icon-confidential" data-open="win-confidential">
+      <svg class="pix" aria-hidden="true"><use href="#i-folder-lock"/></svg>
+      <span class="icon__label">CONFIDENTIAL</span>
+    </button>
+    <button class="icon" id="icon-trash" data-action="trash">
+      <svg class="pix" aria-hidden="true"><use href="#i-trash"/></svg>
+      <span class="icon__label">TRASH</span>
+    </button>
+
+    <!-- README window -->
+    <section class="window" id="win-readme" style="--w:560px" role="dialog" aria-labelledby="t-readme" hidden>
+      <header class="window__bar">
+        <button class="window__close" aria-label="Close README"></button>
+        <h2 class="window__title" id="t-readme">README.TXT</h2>
+      </header>
+      <div class="window__body doc">
+        <p class="doc__hello">HELLO.</p>
+        <p>I&rsquo;m Peter-Paul de Leeuw. I start things and build them: companies, products, and lately, ways for large organisations to actually use generative&nbsp;AI.</p>
+        <p>I believe AI will fundamentally change how we work and live. Not in the keynote way &mdash; in the quiet, practical way, where the tools get better every month until one day the work itself is different. Most organisations aren&rsquo;t ready for that. Helping them get ready is what I do: I listen to customers, understand what the models can and can&rsquo;t do, and turn both into decisions, launches and growth that hold up after I&rsquo;ve left the room.</p>
+        <p>Offline I 3D-print things nobody asked for and play water polo, which is best described as drowning with rules.</p>
+        <div class="doc__nav">
+          <p class="doc__navtitle">WHERE TO CLICK</p>
+          <ul>
+            <li><button class="linklike" data-open="win-career">CAREER.DOC</button> &mdash; the long version</li>
+            <li><button class="linklike" data-open="win-built">THINGS I BUILT</button> &mdash; five shortcuts, all real</li>
+            <li><button class="linklike" data-open="win-agi">AGI</button> &mdash; required reading</li>
+            <li><button class="linklike" data-open="win-contact">CONTACT</button> &mdash; say hello</li>
+            <li><button class="linklike" data-open="win-confidential">CONFIDENTIAL</button> &mdash; do not open</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREER window -->
+    <section class="window" id="win-career" style="--w:660px" role="dialog" aria-labelledby="t-career" hidden>
+      <header class="window__bar">
+        <button class="window__close" aria-label="Close CAREER"></button>
+        <h2 class="window__title" id="t-career">CAREER.DOC</h2>
+      </header>
+      <div class="window__body doc">
+        <p class="doc__kicker">THE LONG VERSION</p>
+
+        <h3 class="doc__h">NOW</h3>
+        <p>After seven years of building Amberscript I handed over the keys in November&nbsp;2024. Since then I&rsquo;ve been doing the thing I kept telling our customers to do: taking generative AI seriously. I work with enterprises that want to get from &ldquo;we should do something with AI&rdquo; to shipped products and changed ways of working &mdash; and I&rsquo;m open to doing that inside a frontier lab.</p>
+
+        <h3 class="doc__h">2017&ndash;2024 &middot; AMBERSCRIPT &mdash; CO-FOUNDER &amp; CEO</h3>
+        <p>During my MBA I fell for speech recognition: the models were getting good, and few people in Europe were turning them into products you could actually use. So we did. Amberscript turns audio and video into text and subtitles &mdash; AI first, human editors where it matters. We grew from two founders and a microphone into an international team serving universities, broadcasters, governments and enterprises across Europe. Seven years of hiring, shipping, pricing, breaking, fixing and scaling. The best education I ever paid for with sleep.</p>
+
+        <h3 class="doc__h">ALSO BUILT ALONG THE WAY</h3>
+        <p><strong>Amberscript Notes</strong> &mdash; an AI meeting assistant that records, transcribes and summarises your meetings.<br>
+        <strong>Blue Health</strong> &mdash; a 360&deg; preventive health check in Amsterdam: one hour, ECG to bloodwork, doctor included.<br>
+        <strong>Heritage View Capital</strong> &mdash; a fund with one job: buy one great Dutch company and run it well for the long term.</p>
+
+        <h3 class="doc__h">2011&ndash;2016 &middot; ACCENTURE &mdash; STRATEGY CONSULTANT</h3>
+        <p>Five years advising large corporations through big technology changes. This is where I learned structured thinking &mdash; and that slides don&rsquo;t ship.</p>
+
+        <h3 class="doc__h">EDUCATION</h3>
+        <p>INSEAD &mdash; MBA (2016&ndash;2017)<br>
+        Erasmus University Rotterdam &mdash; MSc (2009&ndash;2011)<br>
+        Utrecht University &mdash; BSc (2005&ndash;2009)</p>
+
+        <h3 class="doc__h">SYSTEM SPECIFICATIONS</h3>
+        <pre class="doc__spec">LOCATION ..... Amsterdam, NL
+LANGUAGES .... Dutch, English
+INTERESTS .... how organisations actually adopt AI
+HOBBIES ...... 3D printing, water polo</pre>
+      </div>
+    </section>
+
+    <!-- AGI folder -->
+    <section class="window" id="win-agi" style="--w:600px" role="dialog" aria-labelledby="t-agi" hidden>
+      <header class="window__bar">
+        <button class="window__close" aria-label="Close AGI folder"></button>
+        <h2 class="window__title" id="t-agi">AGI</h2>
+      </header>
+      <div class="window__body folder">
+        <p class="folder__hint">REQUIRED READING &mdash; double-click nothing, single click everything</p>
+        <div class="filegrid">
+          <a class="file" href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener" title="Vaswani et al., 2017 · arXiv:1706.03762">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">Attention Is All You Need</span>
+          </a>
+          <a class="file" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener" title="Brown et al., 2020 · arXiv:2005.14165">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">Language Models Are Few-Shot Learners</span>
+          </a>
+          <a class="file" href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener" title="Kaplan et al., 2020 · arXiv:2001.08361">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">Scaling Laws for Neural Language Models</span>
+          </a>
+          <a class="file" href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener" title="Hoffmann et al., 2022 · arXiv:2203.15556">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">Training Compute-Optimal Large Language Models</span>
+          </a>
+          <a class="file" href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener" title="Ouyang et al., 2022 · arXiv:2203.02155">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">Training Language Models to Follow Instructions with Human Feedback</span>
+          </a>
+          <a class="file" href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener" title="Dao et al., 2022 · arXiv:2205.14135">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</span>
+          </a>
+        </div>
+      </div>
+      <footer class="window__status">6 items &middot; a few trillion tokens later</footer>
+    </section>
+
+    <!-- THINGS I BUILT folder -->
+    <section class="window" id="win-built" style="--w:660px" role="dialog" aria-labelledby="t-built" hidden>
+      <header class="window__bar">
+        <button class="window__close" aria-label="Close THINGS I BUILT folder"></button>
+        <h2 class="window__title" id="t-built">THINGS I BUILT</h2>
+      </header>
+      <div class="window__body folder">
+        <div class="filelist" role="list">
+          <div class="filelist__head" aria-hidden="true">
+            <span>NAME</span><span>KIND</span><span>NOTES</span>
+          </div>
+          <a class="filerow" role="listitem" href="https://www.amberscript.com" target="_blank" rel="noopener">
+            <span class="filerow__name"><svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>AMBERSCRIPT.HTML</span>
+            <span class="filerow__kind">COMPANY</span>
+            <span class="filerow__notes">AI speech-to-text: turns audio &amp; video into text and subtitles. Co-founded it in 2017, led it for seven years.</span>
+          </a>
+          <a class="filerow" role="listitem" href="https://notes.amberscript.com/" target="_blank" rel="noopener">
+            <span class="filerow__name"><svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>NOTES.HTML</span>
+            <span class="filerow__kind">PRODUCT</span>
+            <span class="filerow__notes">AI meeting assistant: records, transcribes and summarises meetings so you can actually attend them.</span>
+          </a>
+          <a class="filerow" role="listitem" href="https://voltnederland.org/" target="_blank" rel="noopener">
+            <span class="filerow__name"><svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>VOLT.HTML</span>
+            <span class="filerow__kind">MOVEMENT</span>
+            <span class="filerow__notes">Volt Nederland &mdash; the Dutch chapter of the pan-European political movement.</span>
+          </a>
+          <a class="filerow" role="listitem" href="https://bluehealth.co/" target="_blank" rel="noopener">
+            <span class="filerow__name"><svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>BLUEHEALTH.HTML</span>
+            <span class="filerow__kind">COMPANY</span>
+            <span class="filerow__notes">360&deg; preventive health check in Amsterdam: one hour, ECG to bloodwork, results with a doctor the same visit.</span>
+          </a>
+          <a class="filerow" role="listitem" href="https://www.heritageviewcapital.com/" target="_blank" rel="noopener">
+            <span class="filerow__name"><svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>HERITAGEVIEW.HTML</span>
+            <span class="filerow__kind">FUND</span>
+            <span class="filerow__notes">Heritage View Capital: acquires and operates one great Dutch company for the long term.</span>
+          </a>
+        </div>
+      </div>
+      <footer class="window__status">5 items &middot; all real &middot; click to verify</footer>
+    </section>
+
+    <!-- CONTACT window -->
+    <section class="window" id="win-contact" style="--w:500px" role="dialog" aria-labelledby="t-contact" hidden>
+      <header class="window__bar">
+        <button class="window__close" aria-label="Close CONTACT"></button>
+        <h2 class="window__title" id="t-contact">CONTACT</h2>
+      </header>
+      <div class="window__body doc">
+        <pre class="doc__spec">STATUS ... open to conversations
+NOW ...... independent &mdash; generative AI in the enterprise
+NEXT ..... the right seat at a frontier AI lab</pre>
+        <ul class="contactlist">
+          <li><span class="contactlist__k">EMAIL</span><a href="mailto:peterpaul.deleeuw@gmail.com">peterpaul.deleeuw@gmail.com</a></li>
+          <li><span class="contactlist__k">LINKEDIN</span><a href="https://www.linkedin.com/in/peterpaul-deleeuw/" target="_blank" rel="noopener">/in/peterpaul-deleeuw</a></li>
+          <li><span class="contactlist__k">GITHUB</span><a href="https://github.com/ppleeuw" target="_blank" rel="noopener">/ppleeuw</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONFIDENTIAL folder -->
+    <section class="window" id="win-confidential" style="--w:440px" role="dialog" aria-labelledby="t-conf" hidden>
+      <header class="window__bar window__bar--danger">
+        <button class="window__close" aria-label="Close CONFIDENTIAL folder"></button>
+        <h2 class="window__title" id="t-conf">CONFIDENTIAL</h2>
+      </header>
+      <div class="window__body folder">
+        <p class="classified-banner">CLASSIFIED &mdash; AUTHORIZED PERSONNEL ONLY</p>
+        <div class="filegrid filegrid--single">
+          <button class="file file--danger" id="file-donotopen">
+            <svg class="pix" aria-hidden="true"><use href="#i-doc"/></svg>
+            <span class="file__label">DO_NOT_OPEN.TXT</span>
+          </button>
+        </div>
+      </div>
+      <footer class="window__status">1 item &middot; seriously, don&rsquo;t</footer>
+    </section>
+
+    <!-- ABOUT window -->
+    <section class="window" id="win-about" style="--w:480px" role="dialog" aria-labelledby="t-about" hidden>
+      <header class="window__bar">
+        <button class="window__close" aria-label="Close About"></button>
+        <h2 class="window__title" id="t-about">About LeeuwOS</h2>
+      </header>
+      <div class="window__body doc doc--center">
+        <svg class="pix pix--big" aria-hidden="true"><use href="#i-lion"/></svg>
+        <p><strong>LeeuwOS 1.0 &ldquo;Water Polo&rdquo;</strong><br>a small tribute to the machines of the 1980s</p>
+        <p>Handmade with HTML, CSS and vanilla JavaScript.<br>No frameworks. No build step. No trackers. No cookies.<br>Zero dependencies &mdash; view source, it&rsquo;s all there.</p>
+        <pre class="doc__spec doc__spec--center">HARDWARE ... your browser
+MEMORY ..... 640K (ought to be enough)
+HOSTING .... GitHub Pages</pre>
+        <p>&copy; 2026 Peter-Paul de Leeuw &middot; <a href="https://github.com/ppleeuw/ppdeleeuw" target="_blank" rel="noopener">source</a></p>
+      </div>
+    </section>
+
   </main>
+
+  <!-- Ticker -->
+  <footer id="ticker" aria-hidden="true">
+    <div class="ticker__inner">
+      <span class="ticker__chunk">PETER-PAUL DE LEEUW &#10022; AMSTERDAM &#10022; OPEN TO: APPLIED GENERATIVE AI IN THE ENTERPRISE &#10022; FREELANCE OR THE RIGHT FULL-TIME SEAT &#10022; EMAIL: PETERPAUL.DELEEUW&#64;GMAIL.COM &#10022; NO FRAMEWORKS WERE USED ON THIS SITE &#10022; DO NOT OPEN CONFIDENTIAL &#10022;&nbsp;</span>
+      <span class="ticker__chunk">PETER-PAUL DE LEEUW &#10022; AMSTERDAM &#10022; OPEN TO: APPLIED GENERATIVE AI IN THE ENTERPRISE &#10022; FREELANCE OR THE RIGHT FULL-TIME SEAT &#10022; EMAIL: PETERPAUL.DELEEUW&#64;GMAIL.COM &#10022; NO FRAMEWORKS WERE USED ON THIS SITE &#10022; DO NOT OPEN CONFIDENTIAL &#10022;&nbsp;</span>
+    </div>
+  </footer>
+
+  <!-- Scanlines overlay (toggle via View menu) -->
+  <div id="scanlines" aria-hidden="true" hidden></div>
+
+  <!-- Dialog root -->
+  <div id="dialog-root"></div>
+
+  <noscript>
+    <div class="noscript">
+      <h1>Peter-Paul de Leeuw</h1>
+      <p>This site is a tiny 1980s operating system and needs JavaScript to boot. The short version:
+        founder (Amberscript, Blue Health, Heritage View Capital), now working on generative AI in the enterprise.
+        <a href="mailto:peterpaul.deleeuw@gmail.com">Email me</a> or find me on
+        <a href="https://www.linkedin.com/in/peterpaul-deleeuw/">LinkedIn</a>.</p>
+    </div>
+  </noscript>
+
+  <script src="assets/app.js"></script>
 </body>
 </html>
