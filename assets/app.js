@@ -210,7 +210,7 @@
   /* The classified file. You were warned. */
   $('#file-donotopen').addEventListener('click', function () {
     showDialog(
-      'DO_NOT_OPEN.TXT is classified. Opening it may permanently alter your opinion of Peter-Paul.',
+      'DO_NOT_OPEN.TXT is classified.',
       [
         { label: 'Cancel' },
         {
