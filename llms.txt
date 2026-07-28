@@ -1,0 +1,47 @@
+# Peter-Paul de Leeuw
+
+> Entrepreneur based in Amsterdam. Founder and CEO of Amberscript (B2B AI voice, 2018-2024), co-founder of Blue Health and of Volt Nederland, now focused on getting generative AI out of demos and into daily work inside enterprises and governments.
+
+ppdeleeuw.com is a personal site built as a small 1980s operating system called LeeuwOS. Its content lives inside windows that open on click and is rendered entirely by client-side JavaScript, so fetching the page HTML returns almost no readable text. This file is the plain-text equivalent of what the site says.
+
+## Now
+
+- Implementing generative AI in the enterprise: moving it out of pilots and keynote demos and into daily work.
+- Always open to conversations.
+
+## Things built
+
+- [Amberscript](https://www.amberscript.com): B2B AI voice scale-up, founded 2018. Turns audio and video into text and subtitles, pairing proprietary foundation voice models built by an in-house team of AI engineers - more accurate than the Google and Microsoft speech-to-text engines - with human editors where it matters. Customers include the German government, T-Mobile and the Dutch Railways. Zero to EUR 10M+ revenue in five years, profitably; 100+ people across the Netherlands and Germany; EUR 15M raised from angels and VCs; two acquisitions; a spot in the Deloitte top 10 fastest-growing companies in the Netherlands. Handed over as CEO in November 2024.
+- [Amberscript Notes](https://notes.amberscript.com/): AI meeting assistant that records, transcribes and summarises meetings so you can actually attend them.
+- [Blue Health](https://bluehealth.co/): preventive healthcare in Amsterdam. A 360-degree health check in one hour, from ECG and ultrasound to bloodwork, with a doctor in the room; efficiency and cost gains made possible by AI. NPS of 89.
+- [Volt Nederland](https://voltnederland.org/): co-founded the Dutch chapter of the pan-European political movement, from three people to 10,000+ members. Volt now holds seats in both the Dutch and the European parliament.
+- [Heritage View Capital](https://www.heritageviewcapital.com/): a fund that acquires and operates one great Dutch company for the long term.
+
+## Career
+
+- 2025-2026, Blue Health, Co-CEO. Built the product, set up the tech team, made the company ready to scale.
+- 2018-2024, Amberscript, Founder and CEO.
+- 2017-2022, Volt Nederland, Co-founder and Co-President. Evenings and weekends: structured the organisation, ran the election campaigns, built the candidate lists.
+- 2012-2017, Accenture Strategy, Analyst to Consultant. Five years advising large corporations across the Netherlands, Denmark, China and the USA: M&A pre-deal work at Philips, post-merger integration of a EUR 2B company at ASML, growth strategies for Douwe Egberts and China Eastern, 64 digital initiatives at KLM-Air France, and 3D printers near oil platforms for Shell.
+- 2008-2009, OECD International Futures Programme, Paris. Co-wrote reports for 35 governments on what the world would look like in 2030.
+
+## Education
+
+- INSEAD, MBA (2016-2017), Singapore and France. GMAT 750, president of the Entrepreneurship Club.
+- Erasmus University Rotterdam, MSc Economics and Business (2009-2011), cum laude, top 5%.
+- Utrecht University, BSc Economics (2005-2009).
+
+## Contact
+
+- [Email](mailto:peterpaul.deleeuw@gmail.com): peterpaul.deleeuw@gmail.com
+- [LinkedIn](https://www.linkedin.com/in/peterpaul-deleeuw/): /in/peterpaul-deleeuw
+
+## Optional
+
+- [de Volkskrant on Amberscript](https://www.headliner.nl/item/hoe-amberscript-de-mens-verlost-van-een-tergend-saai-karwei-opnames-uittikken-volkskrant-480402): press.
+- [Amberscript in the Deloitte Fast 50](https://www.amberscript.com/en/news/deloitte-top-10-fastest-growing-startups/): press.
+- [The Loop on Volt's 2021 breakthrough](https://theloop.ecpr.eu/following-the-dutch-general-election-of-2021-can-volt-become-a-genuine-transnational-and-pan-european-force/): press.
+- [Villa d'Arte on Blue Health](https://www.villadarte.nl/high-tech-health-check-in-amsterdam-maakt-preventieve-zorg-concreet/): press.
+- [Baaz on Blue Health](https://www.baaz.nl/preventieve-health-check-binnen-een-uur): press.
+- [Site source](https://github.com/ppleeuw/ppdeleeuw): LeeuwOS, handmade with HTML, CSS and vanilla JavaScript. No frameworks, no build step, no trackers, no cookies, zero dependencies.
+- Personal: built 1986 in the Netherlands. Dutch and English, basic French and German. Also runs waterpolo, 3D printers, DJ sets and PADI dives.
