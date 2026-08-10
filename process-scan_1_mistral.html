@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process scan for AI (Mistral)</title>
+<style>
+  :root{
+    --navy:#1E2E3B;          /* main fold, deep neutral slate */
+    --brand:#41607A;         /* neutral accent, selected states */
+    --blue:#009FE3;          /* buttons, waitlist */
+    --blue-dark:#0079B8;
+    --orange:#F5821F;        /* accents, formerly red and yellow */
+    --orange-dark:#D96A0A;
+    --green:#149E52;         /* build now, high scores */
+    --green-dark:#0E7C3F;
+    --green-soft:#EAF7EF;
+    --grey:#5E7280;
+    --grey-mid:#8A9BA8;
+    --grey-light:#EDF3F7;
+    --ink:#152531;
+    --line:#D5E1EA;
+    --font:'Nunito','Varela Round','Trebuchet MS','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:#F5F7F9;color:var(--ink);line-height:1.45}
+
+  /* ---------------- fold ---------------- */
+  header{background:var(--navy);color:#fff;padding:28px 28px 26px;position:relative;overflow:hidden}
+  .fold-in{display:flex;align-items:center;gap:18px;flex-wrap:wrap;position:relative;z-index:1}
+  h1{font-size:29px;font-weight:900;letter-spacing:-.6px;line-height:1.1}
+  .tagline{margin-top:5px;font-size:14px;font-weight:700;color:#B9C7D2}
+  .tagline b{color:var(--orange)}
+
+  main{max-width:1080px;margin:0 auto;padding:26px 20px 70px}
+
+  /* ---------------- panels ---------------- */
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:22px;margin-bottom:22px;box-shadow:0 2px 6px rgba(0,48,107,.05)}
+  .panel h2{font-size:17px;font-weight:900;color:var(--navy);text-transform:uppercase;
+    letter-spacing:.5px;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+  .panel h2::before{content:"";width:10px;height:22px;background:var(--orange);border-radius:3px}
+
+  label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;
+    color:var(--grey);display:block;margin-bottom:6px}
+  input[type=text],textarea{width:100%;border:2px solid var(--line);border-radius:10px;
+    padding:11px 13px;font-family:var(--font);font-size:14px;color:var(--ink);background:#FCFDFE}
+  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--blue)}
+  textarea{min-height:150px;resize:vertical}
+
+  .btn{border:none;border-radius:999px;padding:13px 26px;font-family:var(--font);font-size:15px;
+    font-weight:900;cursor:pointer;letter-spacing:.3px;transition:transform .08s}
+  .btn:active{transform:scale(.97)}
+  .btn-blue{background:var(--blue);color:#fff;box-shadow:0 3px 0 var(--blue-dark)}
+  .btn-blue:hover{background:var(--blue-dark)}
+  .btn-ghost{background:#fff;color:var(--navy);border:2px solid var(--line);padding:11px 20px}
+  .btn:disabled{opacity:.55;cursor:wait}
+  .actions{display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  .hint{font-size:12px;color:var(--grey)}
+  .error{margin-top:12px;background:#FFF3E6;border:1px solid #F5C48A;color:var(--orange-dark);
+    border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;display:none}
+
+  /* ---------------- verdict tag ---------------- */
+  .pricetag{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+    background:var(--green);color:#fff;padding:11px 22px;border-radius:7px;transform:rotate(-2deg);
+    box-shadow:0 3px 8px rgba(0,0,0,.16);min-width:150px}
+  .pricetag.wait{background:var(--blue)} .pricetag.no{background:var(--grey-mid)}
+  .pricetag .v{font-size:19px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;line-height:1.05}
+  .pricetag .s{font-size:10px;font-weight:800;opacity:.92;text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
+
+  /* ---------------- score grid ---------------- */
+  .axes{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:840px){.axes{grid-template-columns:1fr}}
+  .axis{border:2px solid var(--line);border-radius:12px;overflow:hidden}
+  .axis-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--grey-light)}
+  .axis-head .t{font-size:14px;font-weight:900;text-transform:uppercase;color:var(--navy)}
+  .axis-head .t small{display:block;font-size:10px;font-weight:700;color:var(--grey);text-transform:none;letter-spacing:0}
+  .axis-score{background:var(--navy);color:#fff;font-weight:900;font-size:18px;border-radius:10px;
+    padding:6px 14px;min-width:58px;text-align:center}
+  .axis-score.hot{background:var(--green)}
+  .crit{padding:13px 16px;border-top:1px solid var(--line)}
+  .crit-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+  .crit-name{font-size:14px;font-weight:900}
+  .crit select{font-family:var(--font);font-size:13px;font-weight:800;color:var(--navy);
+    border:2px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;cursor:pointer;max-width:100%}
+  .crit select.edited{border-color:var(--orange);color:var(--orange-dark)}
+  .crit-desc{font-size:11px;color:var(--grey);margin-top:5px;line-height:1.4}
+  .crit-rat{font-size:12px;margin-top:6px;background:#F6FAFD;border-left:3px solid var(--blue);
+    padding:5px 9px;border-radius:0 7px 7px 0}
+  .crit-rat.assume{border-left-color:var(--orange);background:#FFF7EE}
+  .edited-flag{font-size:10px;font-weight:900;color:var(--orange-dark);text-transform:uppercase;letter-spacing:.5px}
+
+  .result-head{display:flex;justify-content:flex-end;margin-bottom:16px}
+
+  /* ---------------- layers overview ---------------- */
+  .layers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+  @media(max-width:860px){.layers{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.layers{grid-template-columns:1fr}}
+  .layer-card{border:2px solid var(--line);border-radius:11px;padding:11px 12px;background:#FBFDFF}
+  .layer-card.on{border-color:var(--brand);background:var(--navy);color:#fff}
+  .layer-card .n{font-size:10px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;color:var(--grey)}
+  .layer-card.on .n{color:var(--orange)}
+  .layer-card .ttl{font-size:14px;font-weight:900;margin-top:2px}
+  .layer-card .d{font-size:11px;line-height:1.4;margin-top:5px;color:var(--grey)}
+  .layer-card.on .d{color:#C9DCF0}
+  .layer-card .pick{display:inline-block;margin-top:7px;background:var(--orange);color:#fff;
+    font-size:9px;font-weight:900;padding:3px 8px;border-radius:4px;letter-spacing:.6px}
+  .layer-why{font-size:12px;color:var(--grey);margin-top:9px}
+  .sub-h{font-size:13px;font-weight:900;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin-top:22px}
+
+  /* ---------------- schedule and risk boxes ---------------- */
+  .box{margin-top:18px;border-radius:12px;padding:16px 18px}
+  .box h4{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+  .box-schedule{border:2px solid var(--green);background:var(--green-soft)}
+  .box-schedule h4{color:var(--green-dark)}
+  .phase{display:flex;gap:11px;margin-bottom:9px;align-items:flex-start}
+  .phase .pnum{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;
+    font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .phase .pt{font-size:13px;font-weight:900;color:var(--navy)}
+  .phase .pd{font-size:12.5px;color:var(--ink)}
+  .box-risk{border:2px solid var(--orange);background:#FFF7EE}
+  .box-risk h4{color:var(--orange-dark)}
+  .risk-what{font-size:14px;font-weight:800;margin-bottom:6px}
+  .risk-mit{font-size:12.5px;color:var(--grey)}
+  .risk-mit b{color:var(--navy)}
+  .box-gov{border:2px solid var(--navy);background:#F5F7F9}
+  .box-gov h4{color:var(--navy)}
+  .box .whatis{font-size:11px;color:var(--grey);line-height:1.45;margin-top:-6px;margin-bottom:10px}
+  .tier{display:inline-block;color:#fff;font-size:11px;font-weight:900;text-transform:uppercase;
+    letter-spacing:.5px;padding:4px 11px;border-radius:5px;margin-bottom:8px}
+  .gov-why{font-size:13.5px;font-weight:800;margin-bottom:6px}
+  .gov-ob{font-size:12.5px;color:var(--grey)}
+  .gov-ob b{color:var(--navy)}
+  .gov-foot{font-size:10.5px;color:var(--grey-mid);margin-top:10px;line-height:1.45;
+    border-top:1px dotted var(--line);padding-top:8px}
+
+  /* ---------------- ranking ---------------- */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:var(--navy);color:#fff;text-align:left;padding:10px 12px;font-size:11px;
+    text-transform:uppercase;letter-spacing:.6px}
+  th:first-child{border-radius:10px 0 0 0}th:last-child{border-radius:0 10px 0 0}
+  td{padding:10px 12px;border-bottom:1px solid var(--line);font-weight:700;vertical-align:middle}
+  tr.head-row{cursor:pointer}
+  tr.head-row:hover td{background:#F3F9FD}
+  tr.open-row td{background:#F3F9FD}
+  .mini-tag{display:inline-block;padding:3px 10px;border-radius:5px;color:#fff;font-size:11px;
+    font-weight:900;text-transform:uppercase;transform:rotate(-2deg)}
+  .mini-tag.build{background:var(--green)} .mini-tag.wait{background:var(--blue)} .mini-tag.no{background:var(--grey-mid)}
+  .score-pill{display:inline-block;background:var(--grey-light);color:var(--navy);border-radius:6px;
+    padding:2px 8px;font-weight:900}
+  .score-pill.hi{background:var(--green);color:#fff}
+  .caret{display:inline-block;width:14px;color:var(--orange);font-weight:900}
+  .rm{color:var(--orange-dark);cursor:pointer;font-weight:900;font-size:12px;background:none;border:none;font-family:var(--font)}
+  .detail td{background:#FAFCFE;padding:0 12px 14px}
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-top:12px}
+  @media(max-width:760px){.detail-grid{grid-template-columns:1fr}}
+  .dcol h5{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);margin-bottom:6px}
+  .drow{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;
+    padding:4px 0;border-bottom:1px dotted var(--line)}
+  .drow .dv{white-space:nowrap;font-weight:900;color:var(--navy)}
+  .drow .dc{color:var(--grey);font-weight:700}
+  .empty{font-size:13px;color:var(--grey);padding:8px 0}
+
+  /* ---------------- matrix ---------------- */
+  .matrix-panel{margin-top:22px;border-top:2px solid var(--line);padding-top:18px}
+  .matrix-wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;margin-top:12px}
+  .legend{font-size:12px;font-weight:800;min-width:210px}
+  .legend .li{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .legend .sw{width:13px;height:13px;border-radius:50%;flex:0 0 auto}
+  .legend .note{font-weight:700;color:var(--grey);font-size:11.5px;margin-top:10px;line-height:1.45}
+  .dotlist{margin-top:12px;font-size:12px;font-weight:700;max-width:330px}
+  .dotlist .dl{display:flex;gap:8px;margin-bottom:5px;align-items:flex-start}
+  .dotlist .idx{flex:0 0 18px;height:18px;border-radius:50%;color:#fff;font-size:10px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .dotlist .txt{color:var(--grey);font-weight:700}
+  .dotlist .txt b{color:var(--ink)}
+
+  .spin{display:inline-block;width:16px;height:16px;border:3px solid rgba(255,255,255,.4);
+    border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-3px;margin-right:8px}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion: reduce){.spin{animation:none}}
+  button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+  footer{max-width:1080px;margin:0 auto;padding:0 20px 34px;font-size:11px;color:var(--grey)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="fold-in">
+    <div>
+      <h1>Process scan for AI</h1>
+      <div class="tagline">Small effort. <b>Big benefit.</b> Find the boring, frequent, textual work worth handing to AI.</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="panel">
+    <h2>Describe a process</h2>
+    <div>
+      <label for="pname">Process name</label>
+      <input type="text" id="pname" placeholder="e.g. Supplier product compliance dossier check">
+    </div>
+    <div style="margin-top:14px">
+      <label for="pdesc">Quick scan interview, document or transcript</label>
+      <textarea id="pdesc" placeholder="Paste the raw material: who does it, how often, what steps, which systems, how long it takes, who owns it."></textarea>
+    </div>
+    <div style="margin-top:14px">
+      <label for="mkey">Mistral API key</label>
+      <input type="password" id="mkey" placeholder="Paste your Mistral API key once. It is stored only in this browser." autocomplete="off">
+    </div>
+    <div class="actions">
+      <button class="btn btn-blue" id="scanBtn">Scan process</button>
+      <span class="hint" id="progress" style="font-weight:800;color:var(--blue-dark)"></span>
+      <span class="hint">Scores are generated automatically. Every score stays editable below.</span>
+    </div>
+    <div class="error" id="errBox"></div>
+  </section>
+
+  <section class="panel" id="resultPanel" style="display:none">
+    <h2>Scan result</h2>
+    <div class="result-head">
+      <div class="pricetag" id="rTag"><span class="v" id="rTagV"></span><span class="s" id="rTagS"></span></div>
+    </div>
+    <div class="axes" id="axes"></div>
+
+    <div class="sub-h">Where it runs</div>
+    <div class="layers" id="layerCards"></div>
+    <div class="layer-why" id="rLayerWhy"></div>
+
+    <div class="box box-risk" id="riskBox" style="display:none">
+      <h4>Biggest risk</h4>
+      <div class="whatis">The single most likely way this build fails or gets rejected in practice, and how to prevent it.</div>
+      <div class="risk-what" id="riskWhat"></div>
+      <div class="risk-mit" id="riskMit"></div>
+    </div>
+
+    <div class="box box-gov" id="govBox" style="display:none">
+      <h4>Governance, EU AI Act compliance</h4>
+      <div class="whatis">Where this use of AI falls under the EU AI Act, and what has to be in place before it goes live.</div>
+      <div><span class="tier" id="govTier"></span></div>
+      <div class="gov-why" id="govWhy"></div>
+      <div class="gov-ob" id="govOb"></div>
+      <div class="gov-foot" id="govFoot"></div>
+    </div>
+
+    <div class="box box-schedule" id="scheduleBox" style="display:none">
+      <h4>Build schedule</h4>
+      <div id="scheduleBody"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-blue" id="saveBtn">Add to ranking</button>
+      <button class="btn btn-ghost" id="discardBtn">Discard</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Ranked processes</h2>
+    <div id="rankBody"><div class="empty">No processes scanned yet. Scan one above.</div></div>
+    <div class="matrix-panel" id="matrixPanel" style="display:none">
+      <div class="sub-h" style="margin-top:0">Effort and benefit matrix</div>
+      <div class="matrix-wrap" id="matrixWrap"></div>
+    </div>
+  </section>
+
+</main>
+<footer>Effort is scored inverted, so 5 means easy to build. Verdict rule: effort 4.0 or higher and benefit 4.0 or higher gives Build now. One axis at 4.0 or higher gives Waitlist. Otherwise Not now.</footer>
+
+<script>
+/* ================= criteria ================= */
+const CRITERIA = [
+ {id:"standardisation", axis:"effort", name:"Process standardisation",
+  short:"Standardisation",
+  desc:"Is there a documented standard way of working, or does every store or person do it differently? Undocumented variation means weeks of discovery before any build.",
+  cats:{5:"Documented and followed",4:"Documented, mostly followed",3:"Informal standard, undocumented",2:"Varies by team or store",1:"Everyone does it their own way"}},
+ {id:"data", axis:"effort", name:"Data reachability", short:"Data reachability",
+  desc:"Are the inputs digital and accessible, such as SharePoint, ERP exports or email, or locked in heads, paper and phone calls?",
+  cats:{5:"Digital and directly exportable",4:"Digital, some access work needed",3:"Mixed digital and manual",2:"Mostly in heads or on paper",1:"Locked away, calls and walking around"}},
+ {id:"text", axis:"effort", name:"Text and structure density", short:"Text density",
+  desc:"Is the work mostly reading, writing, comparing and summarising text or structured data, which is where AI is strongest, or is it physical, visual or negotiation heavy?",
+  cats:{5:"Pure text or structured data work",4:"Mostly text, minor other steps",3:"Half text, half physical or visual",2:"Mostly physical or visual",1:"Physical, sensory or negotiation work"}},
+ {id:"review", axis:"effort", name:"Review tolerance", short:"Review tolerance",
+  desc:"Can a human check the output cheaply before it counts, or must it be right first time with no checkpoint, for example direct customer or legal exposure?",
+  cats:{5:"Cheap human check fits naturally",4:"Spot checks are enough",3:"Full review of every output needed",2:"Review is hard or expensive",1:"Must be right first time, no checkpoint"}},
+ {id:"frequency", axis:"benefit", name:"Frequency and volume", short:"Frequency",
+  desc:"How often does this run and how many people or stores touch it? Daily across 2,700 stores beats quarterly for one person.",
+  cats:{5:"Daily, many people or stores",4:"Daily few people, or weekly many",3:"Weekly",2:"Monthly",1:"Quarterly or ad hoc"}},
+ {id:"time", axis:"benefit", name:"Time consumed per instance", short:"Time per run",
+  desc:"Hours of human effort each run currently eats.",
+  cats:{5:"Days per run",4:"Half a day to a day",3:"A few hours",2:"Under an hour",1:"Minutes"}},
+ {id:"consequence", axis:"benefit", name:"Consequence of errors or delay", short:"Consequence",
+  desc:"What does the current slow or inconsistent process cost today, in missed sales, compliance risk or rework?",
+  cats:{5:"Major cost or risk today",4:"Clear, measurable cost",3:"Noticeable friction",2:"Minor annoyance",1:"Barely matters"}},
+ {id:"owner", axis:"benefit", name:"Owner and appetite", short:"Owner",
+  desc:"Is there a named owner who wants this fixed? No owner means no adoption, and the value stays theoretical.",
+  cats:{5:"Named owner, actively pushing",4:"Named owner, supportive",3:"Owner exists, passive",2:"Ownership unclear",1:"No owner"}}
+];
+
+const LAYER_INFO = {
+ 1:{name:"Chat or Project", d:"Judgment heavy dialogue. A person thinks, drafts and decides with AI in the loop each turn."},
+ 2:{name:"Skill", d:"A repeatable procedure with a fixed method and quality bar, run by different people, output produced in conversation."},
+ 3:{name:"Cowork or Agent", d:"A multi step task over files and tools that a person delegates and reviews at the end."},
+ 4:{name:"API or Integration", d:"Runs on a trigger or schedule with no human starting each run, and writes into business systems."}
+};
+
+let current = null, processes = [], openRow = null;
+const $ = id => document.getElementById(id);
+
+/* ================= scoring ================= */
+function axisScores(p){
+  const m = a => Math.round(a.reduce((x,y)=>x+y,0)/a.length*10)/10;
+  return {
+    effort: m(CRITERIA.filter(c=>c.axis==="effort").map(c=>p.scores[c.id].score)),
+    benefit:m(CRITERIA.filter(c=>c.axis==="benefit").map(c=>p.scores[c.id].score))
+  };
+}
+function verdict(e,b){
+  if(e>=4 && b>=4) return {key:"build", label:"Build now", sub:"goes into a build slot"};
+  if(e>=4 || b>=4) return {key:"wait", label:"Waitlist", sub:"one axis short"};
+  return {key:"no", label:"Not now", sub:"below the bar"};
+}
+const VCOLOR = {build:"#149E52", wait:"#009FE3", no:"#8A9BA8"};
+
+/* EU AI Act tiers. Dates reflect the Digital Omnibus on AI, in force July 2026. */
+const TIERS = {
+  prohibited:{label:"Prohibited practice", color:"#D96A0A",
+    date:"Article 5 prohibitions have applied since 2 February 2025. The added prohibitions on non consensual intimate imagery and CSAM apply from 2 December 2026. Do not build this."},
+  high:{label:"High risk, Annex III", color:"#F5821F",
+    date:"Standalone Annex III obligations apply from 2 December 2027, deferred from 2 August 2026 by the Digital Omnibus on AI. Embedded Annex I systems follow on 2 August 2028. Build against the requirements now, since the runway is for conformity work rather than for waiting."},
+  transparency:{label:"Transparency, Article 50", color:"#009FE3",
+    date:"Article 50 transparency duties apply from 2 August 2026. Machine readable marking of AI generated content applies to systems already on the market from 2 December 2026."},
+  minimal:{label:"Minimal risk", color:"#8A9BA8",
+    date:"No system specific obligations. The Article 4 AI literacy duty has applied to all deployers since 2 February 2025. Verify the classification with legal before go live, since it turns on what the AI decides rather than on the subject matter."}
+};
+
+/* ================= API plumbing ================= */
+/* The key is never shipped in this file. It is pasted once into the field
+   above and kept in localStorage of the visitor's own browser. */
+const KEY_STORE = "mistral-api-key";
+const MISTRAL_MODEL = "mistral-large-latest";
+const MAX_TOKENS = 1000, CHUNK_CHARS = 4500;
+function apiKey(){ return ($("mkey").value || "").trim(); }
+function setStatus(msg, busy){
+  const b = $("scanBtn");
+  b.disabled = !!busy;
+  b.innerHTML = busy ? '<span class="spin"></span>'+msg : "Scan process";
+  $("progress").textContent = busy ? msg : "";
+}
+function showError(msg){ const e=$("errBox"); e.textContent=msg; e.style.display="block"; }
+
+async function callMistral(prompt){
+  const r = await fetch("https://api.mistral.ai/v1/chat/completions",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey()},
+    body: JSON.stringify({model:MISTRAL_MODEL, max_tokens:MAX_TOKENS,
+      messages:[{role:"user",content:prompt}]})
+  });
+  const data = await r.json();
+  if(!r.ok || data.error){
+    const msg = (data.error && (data.error.message||data.error)) || data.message || ("HTTP "+r.status);
+    throw new Error(typeof msg==="string" ? msg : "API error");
+  }
+  const txt = ((data.choices||[])[0]?.message?.content || "").trim();
+  if(!txt) throw new Error("Empty response");
+  return txt;
+}
+async function callWithRetry(p){
+  try{ return await callMistral(p); }
+  catch(e){ await new Promise(r=>setTimeout(r,600)); return await callMistral(p); }
+}
+function extractJSON(raw){
+  let t = raw.replace(/```json/gi,"").replace(/```/g,"").trim();
+  const i = t.indexOf("{");
+  if(i < 0) throw new Error("No JSON found");
+  t = t.slice(i);
+  try{ return JSON.parse(t); }catch(e){}
+  let cut = Math.max(t.lastIndexOf("}"), t.lastIndexOf("]"));
+  let body = cut > 0 ? t.slice(0, cut+1) : t;
+  for(let pass=0; pass<3; pass++){
+    let cand = body.replace(/,\s*$/,"");
+    let opens=0, brk=0, inStr=false, esc=false;
+    for(const ch of cand){
+      if(esc){ esc=false; continue; }
+      if(ch==="\\"){ esc=true; continue; }
+      if(ch==='"'){ inStr=!inStr; continue; }
+      if(inStr) continue;
+      if(ch==="{") opens++; else if(ch==="}") opens--;
+      else if(ch==="[") brk++; else if(ch==="]") brk--;
+    }
+    if(inStr) cand += '"';
+    cand += "]".repeat(Math.max(0,brk)) + "}".repeat(Math.max(0,opens));
+    try{ return JSON.parse(cand); }catch(e){}
+    body = body.replace(/,[^,]*$/,"");
+  }
+  throw new Error("Unparseable response");
+}
+function splitChunks(text){
+  if(text.length <= CHUNK_CHARS) return [text];
+  const paras = text.split(/\n\s*\n/); const out=[]; let buf="";
+  for(const p of paras){
+    if((buf+p).length > CHUNK_CHARS && buf){ out.push(buf); buf=""; }
+    if(p.length > CHUNK_CHARS){ for(let i=0;i<p.length;i+=CHUNK_CHARS) out.push(p.slice(i,i+CHUNK_CHARS)); }
+    else buf += (buf?"\n\n":"") + p;
+  }
+  if(buf) out.push(buf);
+  return out;
+}
+async function condense(text){
+  const chunks = splitChunks(text);
+  if(chunks.length === 1) return text;
+  const briefs = [];
+  for(let i=0;i<chunks.length;i++){
+    setStatus("Reading part "+(i+1)+" of "+chunks.length+"...", true);
+    const p = "Extract only the facts relevant to assessing this process for AI automation. Keep every number, name, system, frequency, duration and stated consequence. Drop pleasantries and repetition. Output plain bullets, max 20 bullets, no commentary.\n\nTEXT (part "+(i+1)+" of "+chunks.length+"):\n"+chunks[i];
+    try{ briefs.push(await callWithRetry(p)); }catch(e){ briefs.push(chunks[i].slice(0,1200)); }
+  }
+  return briefs.join("\n");
+}
+function anchorText(list){
+  return list.map(c => c.id+" - "+c.name+": "+c.desc+"\n  "+[5,4,3,2,1].map(s=>s+"="+c.cats[s]).join("; ")).join("\n");
+}
+async function scoreAxis(axis, brief, name){
+  const list = CRITERIA.filter(c=>c.axis===axis);
+  const inv = axis==="effort" ? "This axis is INVERTED: 5 means EASY to build, 1 means hard." : "5 means high value.";
+  const prompt = "Score this process on four criteria, 1 to 5, strictly using the anchors. "+inv+
+   "\nScore only on evidence in the text. If evidence for a criterion is missing or thin, score 3 or lower and set \"a\" to true.\nKeep every \"r\" under 15 words.\n\nANCHORS:\n"+
+   anchorText(list)+"\n\nPROCESS: "+(name||"(untitled)")+"\n"+brief+
+   "\n\nRespond with ONLY this JSON, no prose, no fences:\n{"+list.map(c=>'"'+c.id+'":{"s":3,"r":"short reason","a":false}').join(",")+"}";
+  const parsed = extractJSON(await callWithRetry(prompt));
+  const out = {};
+  list.forEach(c=>{
+    const v = parsed[c.id] || {};
+    let sc = parseInt(v.s ?? v.score, 10);
+    if(!(sc>=1 && sc<=5)){ sc=3; v.a=true; }
+    out[c.id] = { score:sc, rationale:(v.r||v.rationale||"No evidence in the input for this criterion."),
+                  assumption: !!(v.a ?? v.assumption), edited:false };
+  });
+  return out;
+}
+async function getMeta(brief, name){
+  const prompt = "For the process below, choose the AI delivery layer, write a build schedule, and name the single biggest risk.\n\n"+
+  "LAYER, pick exactly one, first match wins:\n"+
+  "4 = API or Integration: runs on a trigger or schedule, no human starts each run, writes into business systems.\n"+
+  "1 = Chat or Project: judgment heavy dialogue, a person stays in the loop each turn.\n"+
+  "2 = Skill: repeatable procedure with a fixed method, run by different people, output produced in conversation.\n"+
+  "3 = Cowork or Agent: multi step delegated task over files and tools, reviewed at the end.\n\n"+
+  "SCHEDULE: 4 or 5 sequential phases. Describe what happens in each, with no dates, no week numbers and no durations. Give each a short phase title and one sentence of at most 20 words. Name the owner, the data source, the review mechanism and the success metric where the text supports it.\n\n"+
+  "RISK: the single most likely way this build fails or gets rejected in practice, plus how to prevent it. Be specific to this process, not generic.\n\n"+
+  "EU AI ACT: classify the organisation's use of AI in this process as deployer. Use exactly one tier key.\n"+
+  "prohibited = an Article 5 banned practice, for example emotion inference in the workplace, social scoring, or untargeted facial scraping.\n"+
+  "high = Annex III high risk. For a retailer this is almost always employment and worker management: recruitment, screening, promotion or termination decisions, task allocation, or monitoring and evaluating performance and behaviour. Also access to essential services.\n"+
+  "transparency = Article 50 only. The AI interacts directly with people who must be told they are dealing with AI, or it generates synthetic image, audio, video or published text that must be machine readable as AI generated.\n"+
+  "minimal = none of the above. Most internal back office work sits here. It carries no system specific obligation.\n"+
+  "Be strict. Do not inflate an internal administrative process into high risk. Judge by what the AI decides or influences, not by how sensitive the subject matter sounds.\n"+
+  "Give a why in one sentence naming the deciding factor, and an obligation in one sentence saying what the organisation must have in place. For minimal, the obligation is Article 4 AI literacy plus the internal review checkpoint, nothing more.\n\n"+
+  "PROCESS: "+(name||"(untitled)")+"\n"+brief.slice(0,3500)+
+  "\n\nRespond with ONLY this JSON, no prose, no fences:\n"+
+  '{"layer":{"id":2,"reason":"one line"},"schedule":[{"t":"phase title","d":"one sentence"}],"risk":{"what":"one sentence","fix":"one sentence"},"gov":{"tier":"minimal","why":"one sentence","ob":"one sentence"}}';
+  return extractJSON(await callWithRetry(prompt));
+}
+function defaults(axis){
+  const out={};
+  CRITERIA.filter(c=>c.axis===axis).forEach(c=>{
+    out[c.id]={score:3, rationale:"Not scored automatically. Set this yourself.", assumption:true, edited:false};
+  });
+  return out;
+}
+
+/* ================= orchestration ================= */
+$("scanBtn").addEventListener("click", async () => {
+  const name = $("pname").value.trim(), desc = $("pdesc").value.trim();
+  $("errBox").style.display = "none";
+  if(!desc){ showError("Paste a process description first."); return; }
+  if(!apiKey()){ showError("Paste your Mistral API key in the field above first. It is stored only in this browser."); return; }
+  let eS=null, bS=null, meta=null, degraded=[];
+  try{
+    setStatus("Reading the input...", true);
+    const brief = await condense(desc);
+    setStatus("Scoring effort...", true);
+    try{ eS = await scoreAxis("effort", brief, name); }catch(e){ degraded.push("effort"); eS = defaults("effort"); }
+    setStatus("Scoring benefit...", true);
+    try{ bS = await scoreAxis("benefit", brief, name); }catch(e){ degraded.push("benefit"); bS = defaults("benefit"); }
+    setStatus("Choosing layer, schedule and risk...", true);
+    try{ meta = await getMeta(brief, name); }catch(e){ degraded.push("layer and schedule"); meta = null; }
+
+    current = {
+      id: Date.now(),
+      name: name || "Untitled process",
+      scores: {...eS, ...bS},
+      layer: (meta && meta.layer && LAYER_INFO[meta.layer.id]) ? meta.layer : {id:2, reason:"Not determined automatically. Set this yourself."},
+      schedule: (meta && Array.isArray(meta.schedule) && meta.schedule.length) ? meta.schedule : null,
+      risk: (meta && meta.risk && meta.risk.what) ? meta.risk : null,
+      gov: (meta && meta.gov && meta.gov.tier) ? meta.gov : null
+    };
+    renderResult();
+    if(degraded.length) showError("Scanned, but part of it fell back to defaults ("+degraded.join(", ")+"). Those scores are marked as assumptions. Check and override them.");
+  }catch(e){
+    showError("Scan failed: "+(e.message||"unknown error")+". The input was read but not scored. Try again, or split a very long transcript into one process at a time.");
+  }finally{ setStatus("", false); }
+});
+
+/* ================= render result ================= */
+function renderResult(){
+  $("resultPanel").style.display = "block";
+  const ax = $("axes"); ax.innerHTML = "";
+  [["effort","Effort","5 = easy to build (inverted)"],["benefit","Benefit","5 = high value"]].forEach(([key,title,sub])=>{
+    const box = document.createElement("div"); box.className="axis";
+    box.innerHTML = '<div class="axis-head"><div class="t">'+title+'<small>'+sub+'</small></div><div class="axis-score" id="ax-'+key+'"></div></div>';
+    CRITERIA.filter(c=>c.axis===key).forEach(c=>{
+      const s = current.scores[c.id];
+      const opts = [5,4,3,2,1].map(v=>'<option value="'+v+'"'+(v===s.score?" selected":"")+'>'+v+' - '+c.cats[v]+'</option>').join("");
+      const d = document.createElement("div"); d.className="crit";
+      d.innerHTML = '<div class="crit-top"><span class="crit-name">'+c.name+' '+(s.edited?'<span class="edited-flag">edited</span>':'')+
+        '</span><select data-crit="'+c.id+'" class="'+(s.edited?"edited":"")+'">'+opts+'</select></div>'+
+        '<div class="crit-desc">'+c.desc+'</div>'+
+        '<div class="crit-rat '+(s.assumption?"assume":"")+'">'+(s.assumption?"Assumption, verify in follow up. ":"")+s.rationale+'</div>';
+      box.appendChild(d);
+    });
+    ax.appendChild(box);
+  });
+  ax.querySelectorAll("select").forEach(sel=>sel.addEventListener("change", e=>{
+    const id = e.target.dataset.crit;
+    current.scores[id].score = parseInt(e.target.value,10);
+    current.scores[id].edited = true;
+    current.scores[id].assumption = false;
+    renderResult();
+  }));
+
+  const lc = $("layerCards"); lc.innerHTML = "";
+  [1,2,3,4].forEach(n=>{
+    const on = current.layer.id === n;
+    const d = document.createElement("div"); d.className = "layer-card"+(on?" on":"");
+    d.innerHTML = '<div class="n">Layer '+n+'</div><div class="ttl">'+LAYER_INFO[n].name+'</div>'+
+      '<div class="d">'+LAYER_INFO[n].d+'</div>'+(on?'<span class="pick">This process</span>':'');
+    lc.appendChild(d);
+  });
+  $("rLayerWhy").textContent = current.layer.reason || "";
+  refreshVerdict();
+}
+
+function refreshVerdict(){
+  const {effort, benefit} = axisScores(current);
+  $("ax-effort").textContent = effort.toFixed(1);
+  $("ax-benefit").textContent = benefit.toFixed(1);
+  $("ax-effort").className = "axis-score"+(effort>=4?" hot":"");
+  $("ax-benefit").className = "axis-score"+(benefit>=4?" hot":"");
+  const v = verdict(effort, benefit);
+  $("rTag").className = "pricetag"+(v.key==="wait"?" wait":v.key==="no"?" no":"");
+  $("rTagV").textContent = v.label;
+  $("rTagS").textContent = effort.toFixed(1)+" effort, "+benefit.toFixed(1)+" benefit";
+
+  const sb = $("scheduleBox"), rb = $("riskBox"), gb = $("govBox");
+  if(v.key==="build" && current.schedule){
+    sb.style.display="block";
+    $("scheduleBody").innerHTML = current.schedule.map((p,i)=>
+      '<div class="phase"><div class="pnum">'+(i+1)+'</div><div><div class="pt">'+esc(p.t||p.title||"Phase")+'</div>'+
+      '<div class="pd">'+esc(p.d||p.what||"")+'</div></div></div>').join("");
+  } else sb.style.display="none";
+
+  if(current.risk){
+    rb.style.display="block";
+    $("riskWhat").textContent = current.risk.what;
+    $("riskMit").innerHTML = "<b>How to prevent it:</b> "+esc(current.risk.fix||current.risk.mitigation||"");
+  } else rb.style.display="none";
+
+  if(current.gov){
+    gb.style.display="block";
+    const t = TIERS[current.gov.tier] || TIERS.minimal;
+    const badge = $("govTier");
+    badge.textContent = t.label; badge.style.background = t.color;
+    $("govWhy").textContent = current.gov.why || "";
+    $("govOb").innerHTML = "<b>What has to be in place:</b> "+esc(current.gov.ob || "");
+    $("govFoot").textContent = t.date;
+  } else gb.style.display="none";
+}
+
+/* ================= ranking ================= */
+$("saveBtn").addEventListener("click", ()=>{
+  const i = processes.findIndex(p=>p.id===current.id);
+  if(i>=0) processes[i]=current; else processes.push(current);
+  persist(); renderRanking();
+  $("resultPanel").style.display="none";
+  $("pname").value=""; $("pdesc").value=""; current=null;
+});
+$("discardBtn").addEventListener("click", ()=>{ $("resultPanel").style.display="none"; current=null; });
+
+function renderRanking(){
+  const body = $("rankBody");
+  if(!processes.length){
+    body.innerHTML = '<div class="empty">No processes scanned yet. Scan one above.</div>';
+    $("matrixPanel").style.display = "none";
+    return;
+  }
+  const rows = processes.map(p=>({p, ...axisScores(p)})).sort((a,b)=> b.benefit-a.benefit || b.effort-a.effort);
+  let html = '<table><thead><tr><th></th><th>#</th><th>Process</th><th>Effort</th><th>Benefit</th><th>Verdict</th><th>Layer</th><th>AI Act</th><th></th></tr></thead><tbody>';
+  rows.forEach((r,i)=>{
+    const v = verdict(r.effort, r.benefit);
+    const isOpen = openRow === r.p.id;
+    html += '<tr class="head-row'+(isOpen?" open-row":"")+'" data-open="'+r.p.id+'">'+
+      '<td><span class="caret">'+(isOpen?"&#9660;":"&#9654;")+'</span></td>'+
+      '<td>'+(i+1)+'</td><td>'+esc(r.p.name)+'</td>'+
+      '<td><span class="score-pill '+(r.effort>=4?"hi":"")+'">'+r.effort.toFixed(1)+'</span></td>'+
+      '<td><span class="score-pill '+(r.benefit>=4?"hi":"")+'">'+r.benefit.toFixed(1)+'</span></td>'+
+      '<td><span class="mini-tag '+v.key+'">'+v.label+'</span></td>'+
+      '<td>L'+r.p.layer.id+' '+LAYER_INFO[r.p.layer.id].name+'</td>'+
+      '<td>'+govCell(r.p)+'</td>'+
+      '<td><button class="rm" data-del="'+r.p.id+'">remove</button></td></tr>';
+    if(isOpen) html += '<tr class="detail"><td colspan="9">'+detailHTML(r.p)+'</td></tr>';
+  });
+  body.innerHTML = html + "</tbody></table>";
+
+  body.querySelectorAll(".head-row").forEach(tr=>tr.addEventListener("click", e=>{
+    if(e.target.classList.contains("rm")) return;
+    const id = +tr.dataset.open;
+    openRow = (openRow===id) ? null : id;
+    renderRanking();
+  }));
+  body.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click", e=>{
+    e.stopPropagation();
+    processes = processes.filter(p=>p.id!==+e.target.dataset.del);
+    if(openRow===+e.target.dataset.del) openRow=null;
+    persist(); renderRanking();
+  }));
+  body.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click", e=>{
+    e.stopPropagation();
+    const p = processes.find(x=>x.id===+e.target.dataset.edit);
+    if(p){ current = JSON.parse(JSON.stringify(p)); $("pname").value = p.name; renderResult(); window.scrollTo({top:0,behavior:"smooth"}); }
+  }));
+  renderMatrix(rows);
+}
+
+function govCell(p){
+  if(!p.gov) return '<span style="color:var(--grey-mid)">not set</span>';
+  const t = TIERS[p.gov.tier] || TIERS.minimal;
+  return '<span class="tier" style="background:'+t.color+';padding:2px 8px;font-size:10px;margin:0">'+t.label+'</span>';
+}
+function detailHTML(p){
+  const col = axis => '<div class="dcol"><h5>'+(axis==="effort"?"Effort":"Benefit")+'</h5>'+
+    CRITERIA.filter(c=>c.axis===axis).map(c=>{
+      const s = p.scores[c.id];
+      return '<div class="drow"><span>'+c.short+' <span class="dc">'+c.cats[s.score]+'</span></span><span class="dv">'+s.score+'</span></div>';
+    }).join("")+'</div>';
+  let extra = "";
+  if(p.risk) extra += '<div style="margin-top:12px;font-size:12px"><b style="color:var(--orange-dark)">Biggest risk:</b> '+esc(p.risk.what)+'</div>';
+  if(p.gov){ const t=TIERS[p.gov.tier]||TIERS.minimal;
+    extra += '<div style="margin-top:6px;font-size:12px"><b style="color:var(--navy)">EU AI Act:</b> '+
+      '<span class="tier" style="background:'+t.color+';margin:0 4px 0 0;padding:2px 8px;font-size:10px">'+t.label+'</span>'+esc(p.gov.why)+'</div>'; }
+  if(p.schedule) extra += '<div style="margin-top:6px;font-size:12px"><b style="color:var(--green-dark)">Build schedule:</b> '+
+    p.schedule.map(s=>esc(s.t||s.title||"")).join(" &#8594; ")+'</div>';
+  return '<div class="detail-grid">'+col("effort")+col("benefit")+'</div>'+extra+
+    '<div style="margin-top:12px"><button class="btn btn-ghost" data-edit="'+p.id+'" style="font-size:13px;padding:8px 16px">Edit scores</button></div>';
+}
+function esc(s){ return String(s||"").replace(/[<>&]/g, c=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[c])); }
+
+/* ================= matrix ================= */
+function renderMatrix(rows){
+  $("matrixPanel").style.display = "block";
+  const W=360,H=320,L=46,B=40,T=18,R=16;
+  const x = v=>L+(v-1)/4*(W-L-R), y = v=>H-B-(v-1)/4*(H-T-B);
+  const dots = rows.map((r,i)=>{
+    const v = verdict(r.effort,r.benefit);
+    return '<circle cx="'+x(r.effort)+'" cy="'+y(r.benefit)+'" r="10" fill="'+VCOLOR[v.key]+'" stroke="#fff" stroke-width="2"></circle>'+
+      '<text x="'+x(r.effort)+'" y="'+(y(r.benefit)+3.5)+'" font-size="10" font-weight="900" fill="#fff" text-anchor="middle" font-family="Arial">'+(i+1)+'</text>';
+  }).join("");
+  const ticks = [1,2,3,4,5].map(v=>
+    '<text x="'+x(v)+'" y="'+(H-B+15)+'" font-size="9" fill="#8A9BA8" text-anchor="middle" font-family="Arial">'+v+'</text>'+
+    '<text x="'+(L-11)+'" y="'+(y(v)+3)+'" font-size="9" fill="#8A9BA8" text-anchor="middle" font-family="Arial">'+v+'</text>').join("");
+
+  const list = rows.map((r,i)=>{
+    const v = verdict(r.effort,r.benefit);
+    return '<div class="dl"><span class="idx" style="background:'+VCOLOR[v.key]+'">'+(i+1)+'</span>'+
+      '<span class="txt"><b>'+esc(r.p.name)+'</b>, '+r.effort.toFixed(1)+' effort and '+r.benefit.toFixed(1)+' benefit. '+v.label+'.</span></div>';
+  }).join("");
+
+  $("matrixWrap").innerHTML =
+   '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Effort and benefit matrix">'+
+   '<rect x="'+x(4)+'" y="'+T+'" width="'+(W-R-x(4))+'" height="'+(y(4)-T)+'" fill="#EAF7EF"/>'+
+   '<rect x="'+L+'" y="'+T+'" width="'+(W-L-R)+'" height="'+(H-T-B)+'" fill="none" stroke="#D5E1EA" stroke-width="2" rx="8"/>'+
+   '<line x1="'+x(4)+'" y1="'+T+'" x2="'+x(4)+'" y2="'+(H-B)+'" stroke="#149E52" stroke-dasharray="4 4"/>'+
+   '<line x1="'+L+'" y1="'+y(4)+'" x2="'+(W-R)+'" y2="'+y(4)+'" stroke="#149E52" stroke-dasharray="4 4"/>'+
+   '<text x="'+(x(4)+(W-R-x(4))/2)+'" y="'+(T+16)+'" font-size="10" font-weight="900" fill="#149E52" text-anchor="middle" font-family="Arial">BUILD NOW</text>'+
+   '<text x="'+((L+W-R)/2)+'" y="'+(H-8)+'" font-size="11" font-weight="800" fill="#5E7280" text-anchor="middle" font-family="Arial">Effort, 5 = easy</text>'+
+   '<text x="13" y="'+((T+H-B)/2)+'" font-size="11" font-weight="800" fill="#5E7280" text-anchor="middle" font-family="Arial" transform="rotate(-90 13 '+((T+H-B)/2)+')">Benefit</text>'+
+   ticks + dots + '</svg>'+
+   '<div class="legend">'+
+     '<div class="li"><span class="sw" style="background:#149E52"></span>Build now, 4.0 or higher on both</div>'+
+     '<div class="li"><span class="sw" style="background:#009FE3"></span>Waitlist, one axis short</div>'+
+     '<div class="li"><span class="sw" style="background:#8A9BA8"></span>Not now, below the bar</div>'+
+     '<div class="note">Numbers match the ranking above. The green zone is the build slot.</div>'+
+     '<div class="dotlist">'+list+'</div>'+
+   '</div>';
+}
+
+/* ================= persistence ================= */
+function persist(){
+  try{ localStorage.setItem("action-process-scan-v2", JSON.stringify(processes)); }catch(e){}
+}
+(function restore(){
+  try{
+    const r = localStorage.getItem("action-process-scan-v2");
+    if(r) processes = JSON.parse(r);
+  }catch(e){}
+  try{
+    const k = localStorage.getItem(KEY_STORE);
+    if(k) $("mkey").value = k;
+  }catch(e){}
+  $("mkey").addEventListener("change", ()=>{
+    try{ localStorage.setItem(KEY_STORE, apiKey()); }catch(e){}
+  });
+  renderRanking();
+})();
+</script>
+</body>
+</html>
