@@ -1071,7 +1071,7 @@ const PROC_KEY = "action-process-scan-v2";
    supabase/schema.sql in this repository. While the config is empty, or when Supabase is
    unreachable, the page falls back to this browser's localStorage. The model API key is
    kept in localStorage only and never written to Supabase. */
-const SUPABASE = { url: "", anonKey: "", site: "ppdeleeuw" };
+const SUPABASE = { url: "https://mtwfxqzizgdvfuwvvhsk.supabase.co", anonKey: "sb_publishable_iRXy0dP_aPMQCRAVRbOHHw_oOdesu-9", site: "ppdeleeuw" };
 function sbReady(){ return !!(SUPABASE.url && SUPABASE.anonKey); }
 function sbHeaders(extra){
   return Object.assign({"apikey":SUPABASE.anonKey, "Authorization":"Bearer "+SUPABASE.anonKey,
