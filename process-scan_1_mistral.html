@@ -175,6 +175,80 @@
   .dotlist .txt{color:var(--grey);font-weight:700}
   .dotlist .txt b{color:var(--ink)}
 
+  /* ---------------- guardrails settings ---------------- */
+  .panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+  .panel-head h2{margin-bottom:14px}
+  .gear{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--navy);border:2px solid var(--line);
+    border-radius:999px;padding:7px 14px 7px 10px;font-family:var(--font);font-size:12px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;letter-spacing:.5px}
+  .gear:hover{border-color:var(--brand)}
+  .gear svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .gear .cnt{background:var(--orange);color:#fff;border-radius:999px;font-size:10px;padding:1px 7px;display:none}
+  .gear .cnt.on{display:inline-block}
+  .gr-note{font-size:12px;color:var(--grey);margin-top:10px;display:none}
+  .gr-note.on{display:block}
+  .gr-note b{color:var(--navy)}
+  .modal-bg{position:fixed;inset:0;background:rgba(21,37,49,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+  .modal-bg.on{display:flex}
+  .modal{background:#fff;border-radius:14px;width:min(760px,100%);max-height:92vh;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+  .modal-top{background:var(--navy);color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-radius:14px 14px 0 0}
+  .modal-top h3{font-size:16px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
+  .modal-top .x{background:none;border:none;color:#fff;font-size:22px;font-weight:900;cursor:pointer;line-height:1;font-family:var(--font)}
+  .modal-intro{padding:14px 22px 0;font-size:12.5px;color:var(--grey);line-height:1.5}
+  .tabs{display:flex;gap:6px;padding:14px 22px 0;border-bottom:2px solid var(--line)}
+  .tab{background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;padding:8px 14px;font-family:var(--font);
+    font-size:13px;font-weight:900;color:var(--grey);cursor:pointer;text-transform:uppercase;letter-spacing:.5px}
+  .tab.on{color:var(--navy);border-bottom-color:var(--orange)}
+  .tabpane{display:none;padding:18px 22px 6px}
+  .tabpane.on{display:block}
+  .tabpane .lead{font-size:12.5px;color:var(--grey);margin-bottom:14px;line-height:1.5}
+  .gfield{margin-bottom:16px}
+  .gfield textarea{min-height:110px;font-size:13px}
+  .gfield .sub{font-size:11.5px;color:var(--grey);margin-top:5px;line-height:1.45}
+  .gfield .sub code{font-family:Consolas,Menlo,monospace;font-size:11px;background:var(--grey-light);padding:1px 5px;border-radius:4px;color:var(--navy)}
+  .modal-foot{display:flex;gap:10px;justify-content:flex-end;align-items:center;padding:10px 22px 20px;flex-wrap:wrap}
+  .modal-foot .hint{margin-right:auto}
+
+  /* ---------------- guardrails in result ---------------- */
+  .box-guard{border:2px solid var(--brand);background:#F4F8FB}
+  .box-guard h4{color:var(--brand)}
+  .gcols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.gcols{grid-template-columns:1fr}}
+  .gcols h5{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);margin-bottom:6px}
+  .gcols ul{list-style:none;font-size:12.5px}
+  .gcols li{padding:3px 0 3px 14px;position:relative;border-bottom:1px dotted var(--line)}
+  .gcols li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:var(--brand)}
+  .gcols .none{color:var(--grey-mid);font-size:12px}
+
+  /* ---------------- eval and cost ---------------- */
+  .box-eval{border:2px solid var(--green);background:#fff}
+  .box-eval.warn{border-color:var(--orange)}
+  .box-eval.fail{border-color:var(--grey-mid)}
+  .box-eval h4{display:flex;align-items:center;gap:10px}
+  .box-eval h4 .ev-title{color:var(--navy);letter-spacing:1.2px}
+  .ev-pill{display:inline-block;color:#fff;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:4px;background:var(--green)}
+  .box-eval.warn .ev-pill{background:var(--orange)}
+  .box-eval.fail .ev-pill{background:var(--grey-mid)}
+  .ev-sent{font-size:13.5px;font-weight:800;line-height:1.5}
+  .ev-checks{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .chk{font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:#FBFDFF;color:var(--grey)}
+  .chk.ok{border-color:var(--green);color:var(--green-dark);background:var(--green-soft)}
+  .chk.bad{border-color:var(--orange);color:var(--orange-dark);background:#FFF7EE}
+  .cost-line{margin-top:14px;font-size:12px;color:var(--grey);background:var(--grey-light);border-radius:10px;padding:9px 14px;
+    display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .cost-line b{color:var(--navy);font-size:13px}
+  .cost-line .i{width:18px;height:18px;border-radius:50%;background:var(--navy);color:#fff;font-size:11px;font-weight:900;
+    display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;font-style:normal}
+
+  .keyrow{display:grid;grid-template-columns:1fr 220px;gap:14px;margin-top:14px}
+  @media(max-width:640px){.keyrow{grid-template-columns:1fr}}
+  input[type=password]{width:100%;border:2px solid var(--line);border-radius:10px;padding:11px 13px;font-family:var(--font);font-size:14px;color:var(--ink);background:#FCFDFE}
+  input[type=password]:focus{outline:none;border-color:var(--blue)}
+  .keyrow select{width:100%;border:2px solid var(--line);border-radius:10px;padding:11px 10px;font-family:var(--font);font-size:14px;font-weight:800;color:var(--navy);background:#FCFDFE;cursor:pointer}
+  .keyrow select:focus{outline:none;border-color:var(--blue)}
+  .remember{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--grey);font-weight:700;margin-top:7px;text-transform:none;letter-spacing:0}
+  .remember input{width:15px;height:15px;accent-color:var(--blue)}
+
   .spin{display:inline-block;width:16px;height:16px;border:3px solid rgba(255,255,255,.4);
     border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-3px;margin-right:8px}
   @keyframes sp{to{transform:rotate(360deg)}}
@@ -188,7 +262,7 @@
 <header>
   <div class="fold-in">
     <div>
-      <h1>Process scan for AI</h1>
+      <h1>Process scan for AI <span style="color:#B9C7D2;font-weight:700;font-size:18px">Mistral</span></h1>
       <div class="tagline">Small effort. <b>Big benefit.</b> Find the boring, frequent, textual work worth handing to AI.</div>
     </div>
   </div>
@@ -197,7 +271,13 @@
 <main>
 
   <section class="panel">
-    <h2>Describe a process</h2>
+    <div class="panel-head">
+      <h2>Describe a process</h2>
+      <button class="gear" id="gearBtn" type="button" aria-haspopup="dialog" aria-controls="guardModal" title="Guardrails settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+        Guardrails <span class="cnt" id="gearCnt"></span>
+      </button>
+    </div>
     <div>
       <label for="pname">Process name</label>
       <input type="text" id="pname" placeholder="e.g. Supplier product compliance dossier check">
@@ -206,17 +286,72 @@
       <label for="pdesc">Quick scan interview, document or transcript</label>
       <textarea id="pdesc" placeholder="Paste the raw material: who does it, how often, what steps, which systems, how long it takes, who owns it."></textarea>
     </div>
-    <div style="margin-top:14px">
-      <label for="mkey">Mistral API key</label>
-      <input type="password" id="mkey" placeholder="Paste your Mistral API key once. It is stored only in this browser." autocomplete="off">
+    <div class="keyrow">
+      <div>
+        <label for="apikey">Mistral API key</label>
+        <input type="password" id="apikey" autocomplete="off" placeholder="Paste your key from console.mistral.ai. It is sent to api.mistral.ai only.">
+        <label class="remember"><input type="checkbox" id="rememberKey"> Remember the key in this browser</label>
+      </div>
+      <div>
+        <label for="modelSel">Model</label>
+        <select id="modelSel">
+          <option value="mistral-small-latest">Mistral Small, $0.15 / $0.60</option>
+          <option value="mistral-medium-latest">Mistral Medium, $1.50 / $7.50</option>
+          <option value="mistral-large-latest">Mistral Large, $0.50 / $1.50</option>
+          <option value="ministral-8b-latest">Ministral 8B, $0.15 / $0.15</option>
+        </select>
+      </div>
     </div>
     <div class="actions">
       <button class="btn btn-blue" id="scanBtn">Scan process</button>
       <span class="hint" id="progress" style="font-weight:800;color:var(--blue-dark)"></span>
       <span class="hint">Scores are generated automatically. Every score stays editable below.</span>
     </div>
+    <div class="gr-note" id="grNote"></div>
     <div class="error" id="errBox"></div>
   </section>
+
+  <div class="modal-bg" id="guardModal" role="dialog" aria-modal="true" aria-labelledby="guardTitle">
+    <div class="modal">
+      <div class="modal-top">
+        <h3 id="guardTitle">Guardrails</h3>
+        <button class="x" id="guardClose" type="button" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-intro">Two kinds of rule. <b>Deterministic</b> rules can be checked by code, they either hold or they do not. <b>Non deterministic</b> rules need judgment, a model or a reviewer checks them. Both are sent with the scan and checked in the EVAL line of the result.</div>
+      <div class="tabs" role="tablist">
+        <button class="tab on" role="tab" data-tab="process" type="button">Process</button>
+        <button class="tab" role="tab" data-tab="scanner" type="button">Scanner</button>
+      </div>
+
+      <div class="tabpane on" id="tab-process">
+        <div class="gfield">
+          <label for="gProcDet">Deterministic guardrails</label>
+          <textarea id="gProcDet" placeholder="One rule per line, for example:&#10;Nothing goes to a customer or supplier without a named person approving it.&#10;Amounts above 10,000 euro always go to a human.&#10;Only data from the ERP export is used, never from email attachments."></textarea>
+        </div>
+        <div class="gfield">
+          <label for="gProcNon">Non deterministic guardrails</label>
+          <textarea id="gProcNon" placeholder="One rule per line, for example:&#10;Tone stays factual, no speculation about supplier intent.&#10;When the input is ambiguous, ask rather than guess.&#10;Never give legal or medical conclusions, flag them for a person."></textarea>
+        </div>
+      </div>
+
+      <div class="tabpane" id="tab-scanner">
+        <div class="gfield">
+          <label for="gScanDet">Deterministic guardrails</label>
+          <textarea id="gScanDet" placeholder="min_words: 80&#10;must_mention: owner, frequency&#10;max_assumptions: 3&#10;max_rationale_words: 15"></textarea>
+          <div class="sub">One <code>key: value</code> per line. Supported keys: <code>min_words</code> (input length), <code>must_mention</code> (comma separated words that must appear in the input), <code>max_assumptions</code> (criteria allowed to be flagged as assumption), <code>max_rationale_words</code>, <code>schedule_phases</code> (for example <code>4-5</code>). Lines that are not understood are reported in the EVAL line, not silently ignored.</div>
+        </div>
+        <div class="gfield">
+          <label for="gScanNon">Non deterministic guardrails</label>
+          <textarea id="gScanNon" placeholder="One rule per line, for example:&#10;Score only on evidence in the text, never on what is typical for this kind of process.&#10;Treat 'we think' and 'probably' statements as assumptions.&#10;Do not inflate the benefit axis because the owner sounds enthusiastic."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn btn-ghost" id="guardReset" type="button">Clear all</button>
+        <button class="btn btn-blue" id="guardSave" type="button">Save guardrails</button>
+      </div>
+    </div>
+  </div>
 
   <section class="panel" id="resultPanel" style="display:none">
     <h2>Scan result</h2>
@@ -228,6 +363,12 @@
     <div class="sub-h">Where it runs</div>
     <div class="layers" id="layerCards"></div>
     <div class="layer-why" id="rLayerWhy"></div>
+
+    <div class="box box-guard" id="guardBox" style="display:none">
+      <h4>Guardrails for the build</h4>
+      <div class="whatis">The rules this build has to obey, as set in the guardrails window when the process was scanned. Deterministic rules get enforced in code, non deterministic rules get a model or reviewer check.</div>
+      <div class="gcols" id="guardCols"></div>
+    </div>
 
     <div class="box box-risk" id="riskBox" style="display:none">
       <h4>Biggest risk</h4>
@@ -250,6 +391,14 @@
       <div id="scheduleBody"></div>
     </div>
 
+    <div class="box box-eval" id="evalBox" style="display:none">
+      <h4><span class="ev-title">EVAL</span><span class="ev-pill" id="evalPill"></span></h4>
+      <div class="ev-sent" id="evalSent"></div>
+      <div class="ev-checks" id="evalChecks"></div>
+    </div>
+
+    <div class="cost-line" id="costLine" style="display:none"><span class="i">i</span><span id="costText"></span></div>
+
     <div class="actions">
       <button class="btn btn-blue" id="saveBtn">Add to ranking</button>
       <button class="btn btn-ghost" id="discardBtn">Discard</button>
@@ -266,7 +415,7 @@
   </section>
 
 </main>
-<footer>Effort is scored inverted, so 5 means easy to build. Verdict rule: effort 4.0 or higher and benefit 4.0 or higher gives Build now. One axis at 4.0 or higher gives Waitlist. Otherwise Not now.</footer>
+<footer>Effort is scored inverted, so 5 means easy to build. Verdict rule: effort 4.0 or higher and benefit 4.0 or higher gives Build now. One axis at 4.0 or higher gives Waitlist. Otherwise Not now. The EVAL line reports whether the input was sufficient, the model scored on evidence and the build plan respects the guardrails. The scan cost is actual token usage times the model's list price. Nothing leaves this browser except the calls to api.mistral.ai with your own key.</footer>
 
 <script>
 /* ================= criteria ================= */
@@ -335,13 +484,89 @@ const TIERS = {
     date:"No system specific obligations. The Article 4 AI literacy duty has applied to all deployers since 2 February 2025. Verify the classification with legal before go live, since it turns on what the AI decides rather than on the subject matter."}
 };
 
+/* ================= model and price ================= */
+/* The model behind the scan, chosen in the Model select, and its list price in USD
+   per million tokens (in / out). Prices: mistral.ai/pricing/api, August 2026. */
+let MODEL = "mistral-small-latest";
+const PRICES = {
+  "mistral-small-latest":  {label:"Mistral Small 4",    in:0.15, out:0.6},
+  "mistral-medium-latest": {label:"Mistral Medium 3.5", in:1.5,  out:7.5},
+  "mistral-large-latest":  {label:"Mistral Large 3",    in:0.5,  out:1.5},
+  "ministral-8b-latest":   {label:"Ministral 8B",       in:0.15, out:0.15},
+  "ministral-3b-latest":   {label:"Ministral 3B",       in:0.1,  out:0.1},
+  "ministral-14b-latest":  {label:"Ministral 14B",      in:0.2,  out:0.2}
+};
+function priceFor(model){
+  if(PRICES[model]) return PRICES[model];
+  const k = Object.keys(PRICES).find(k=>model.indexOf(k)===0);
+  return k ? PRICES[k] : null;
+}
+/* Token usage of the scan in progress. Reset at the start of every scan. */
+let usage = {calls:0, input:0, output:0, missing:0};
+function resetUsage(){ usage = {calls:0, input:0, output:0, missing:0}; }
+function addUsage(u){
+  usage.calls++;
+  if(u && (u.input_tokens!=null || u.prompt_tokens!=null)){
+    usage.input  += (u.input_tokens ?? u.prompt_tokens ?? 0);
+    usage.output += (u.output_tokens ?? u.completion_tokens ?? 0);
+  } else usage.missing++;
+}
+function costOf(u, model){
+  const p = priceFor(model||MODEL);
+  if(!p) return null;
+  return u.input/1e6*p.in + u.output/1e6*p.out;
+}
+function fmtUsd(v){ return v < 0.01 ? "$"+v.toFixed(4) : "$"+v.toFixed(3); }
+function costSnapshot(){
+  return {model:MODEL, calls:usage.calls, input:usage.input, output:usage.output, missing:usage.missing, usd:costOf(usage, MODEL)};
+}
+function costText(c){
+  if(!c) return "";
+  const p = priceFor(c.model);
+  const label = p ? p.label : c.model;
+  if(c.usd==null) return "Scan cost: no list price known for "+c.model+". "+c.input.toLocaleString()+" tokens in, "+c.output.toLocaleString()+" out, "+c.calls+" calls.";
+  let s = "<b>Scan cost "+fmtUsd(c.usd)+"</b> for this scan. "+c.input.toLocaleString()+" tokens in, "+c.output.toLocaleString()+" out, across "+c.calls+" model call"+(c.calls===1?"":"s")+" to "+label+" at $"+p.in+" in and $"+p.out+" out per million tokens.";
+  if(c.missing) s += " "+c.missing+" call"+(c.missing===1?"":"s")+" returned no usage and "+(c.missing===1?"is":"are")+" not counted.";
+  return s;
+}
+
+/* ================= guardrails ================= */
+const GUARD_KEY = "action-process-scan-guardrails-v1";
+let guardrails = {procDet:"", procNon:"", scanDet:"", scanNon:""};
+const lines = s => String(s||"").split(/\n/).map(x=>x.trim()).filter(Boolean);
+function guardCount(g){ return lines(g.procDet).length+lines(g.procNon).length+lines(g.scanDet).length+lines(g.scanNon).length; }
+function guardSnapshot(){ return {det:lines(guardrails.procDet), non:lines(guardrails.procNon)}; }
+/* Deterministic scanner rules, key: value per line. Unknown keys are reported, not ignored. */
+function parseScanRules(text){
+  const rules = {}, unknown = [];
+  const known = ["min_words","must_mention","max_assumptions","max_rationale_words","schedule_phases"];
+  lines(text).forEach(l=>{
+    const m = l.match(/^([a-z_]+)\s*[:=]\s*(.+)$/i);
+    if(!m){ unknown.push(l); return; }
+    const k = m[1].toLowerCase(), v = m[2].trim();
+    if(known.indexOf(k)<0){ unknown.push(l); return; }
+    rules[k] = v;
+  });
+  return {rules, unknown};
+}
+function guardPromptForScoring(){
+  const n = lines(guardrails.scanNon);
+  return n.length ? "\n\nSCANNER GUARDRAILS, follow these when scoring:\n- "+n.join("\n- ") : "";
+}
+function guardPromptForMeta(){
+  const d = lines(guardrails.procDet), n = lines(guardrails.procNon), s = lines(guardrails.scanNon);
+  let out = "";
+  if(d.length || n.length){
+    out += "\n\nPROCESS GUARDRAILS. The build must obey these. Reflect them in the layer choice, put a phase or step in the schedule where they are encoded and tested, and consider them when naming the risk.\n";
+    if(d.length) out += "Deterministic rules, to be enforced in code:\n- "+d.join("\n- ")+"\n";
+    if(n.length) out += "Non deterministic rules, to be checked by a model or reviewer:\n- "+n.join("\n- ")+"\n";
+  }
+  if(s.length) out += "\nSCANNER GUARDRAILS, follow these:\n- "+s.join("\n- ")+"\n";
+  return out;
+}
+
 /* ================= API plumbing ================= */
-/* The key is never shipped in this file. It is pasted once into the field
-   above and kept in localStorage of the visitor's own browser. */
-const KEY_STORE = "mistral-api-key";
-const MISTRAL_MODEL = "mistral-large-latest";
 const MAX_TOKENS = 1000, CHUNK_CHARS = 4500;
-function apiKey(){ return ($("mkey").value || "").trim(); }
 function setStatus(msg, busy){
   const b = $("scanBtn");
   b.disabled = !!busy;
@@ -350,25 +575,30 @@ function setStatus(msg, busy){
 }
 function showError(msg){ const e=$("errBox"); e.textContent=msg; e.style.display="block"; }
 
-async function callMistral(prompt){
+function apiKey(){ return ($("apikey").value||"").trim(); }
+async function callClaude(prompt){
+  /* Name kept so the rest of the file is identical to the Claude version. This talks to Mistral. */
+  const key = apiKey();
+  if(!key) throw new Error("Paste your Mistral API key first");
+  const wantsJSON = /Respond with ONLY this JSON/.test(prompt);
+  const body = {model:MODEL, max_tokens:MAX_TOKENS, temperature:0.2,
+    messages:[{role:"user",content:prompt}]};
+  if(wantsJSON) body.response_format = {type:"json_object"};
   const r = await fetch("https://api.mistral.ai/v1/chat/completions",{
-    method:"POST",
-    headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey()},
-    body: JSON.stringify({model:MISTRAL_MODEL, max_tokens:MAX_TOKENS,
-      messages:[{role:"user",content:prompt}]})
+    method:"POST", headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
+    body: JSON.stringify(body)
   });
   const data = await r.json();
-  if(!r.ok || data.error){
-    const msg = (data.error && (data.error.message||data.error)) || data.message || ("HTTP "+r.status);
-    throw new Error(typeof msg==="string" ? msg : "API error");
-  }
-  const txt = ((data.choices||[])[0]?.message?.content || "").trim();
+  if(!r.ok || data.error || data.message && !data.choices) throw new Error((data.error && data.error.message) || data.message || ("HTTP "+r.status));
+  addUsage(data.usage);
+  const c = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "";
+  const txt = (Array.isArray(c) ? c.filter(i=>i.type==="text").map(i=>i.text).join("\n") : String(c||"")).trim();
   if(!txt) throw new Error("Empty response");
   return txt;
 }
 async function callWithRetry(p){
-  try{ return await callMistral(p); }
-  catch(e){ await new Promise(r=>setTimeout(r,600)); return await callMistral(p); }
+  try{ return await callClaude(p); }
+  catch(e){ await new Promise(r=>setTimeout(r,600)); return await callClaude(p); }
 }
 function extractJSON(raw){
   let t = raw.replace(/```json/gi,"").replace(/```/g,"").trim();
@@ -426,7 +656,7 @@ async function scoreAxis(axis, brief, name){
   const inv = axis==="effort" ? "This axis is INVERTED: 5 means EASY to build, 1 means hard." : "5 means high value.";
   const prompt = "Score this process on four criteria, 1 to 5, strictly using the anchors. "+inv+
    "\nScore only on evidence in the text. If evidence for a criterion is missing or thin, score 3 or lower and set \"a\" to true.\nKeep every \"r\" under 15 words.\n\nANCHORS:\n"+
-   anchorText(list)+"\n\nPROCESS: "+(name||"(untitled)")+"\n"+brief+
+   anchorText(list)+guardPromptForScoring()+"\n\nPROCESS: "+(name||"(untitled)")+"\n"+brief+
    "\n\nRespond with ONLY this JSON, no prose, no fences:\n{"+list.map(c=>'"'+c.id+'":{"s":3,"r":"short reason","a":false}').join(",")+"}";
   const parsed = extractJSON(await callWithRetry(prompt));
   const out = {};
@@ -455,10 +685,93 @@ async function getMeta(brief, name){
   "minimal = none of the above. Most internal back office work sits here. It carries no system specific obligation.\n"+
   "Be strict. Do not inflate an internal administrative process into high risk. Judge by what the AI decides or influences, not by how sensitive the subject matter sounds.\n"+
   "Give a why in one sentence naming the deciding factor, and an obligation in one sentence saying what the organisation must have in place. For minimal, the obligation is Article 4 AI literacy plus the internal review checkpoint, nothing more.\n\n"+
-  "PROCESS: "+(name||"(untitled)")+"\n"+brief.slice(0,3500)+
+  guardPromptForMeta()+
+  "\nPROCESS: "+(name||"(untitled)")+"\n"+brief.slice(0,3500)+
   "\n\nRespond with ONLY this JSON, no prose, no fences:\n"+
   '{"layer":{"id":2,"reason":"one line"},"schedule":[{"t":"phase title","d":"one sentence"}],"risk":{"what":"one sentence","fix":"one sentence"},"gov":{"tier":"minimal","why":"one sentence","ob":"one sentence"}}';
   return extractJSON(await callWithRetry(prompt));
+}
+
+/* ================= eval ================= */
+/* Two halves. Deterministic checks run in code against the input, the scores and the
+   scanner guardrails. One model call then judges input quality, scoring quality and
+   whether the build plan respects the process guardrails. */
+const wc = s => String(s||"").split(/\s+/).filter(Boolean).length;
+function deterministicChecks(desc, p, degraded){
+  const {rules, unknown} = parseScanRules(guardrails.scanDet);
+  const checks = [];
+  const add = (label, ok, note) => checks.push({label, ok, note});
+
+  const words = wc(desc);
+  const minW = parseInt(rules.min_words, 10);
+  if(minW > 0) add("Input length "+words+" words", words >= minW, words >= minW ? "" : "below the minimum of "+minW);
+  else add("Input length "+words+" words", words >= 40, words >= 40 ? "" : "very short input, expect assumptions");
+
+  if(rules.must_mention){
+    const terms = rules.must_mention.split(",").map(t=>t.trim()).filter(Boolean);
+    const low = desc.toLowerCase();
+    const missing = terms.filter(t=>low.indexOf(t.toLowerCase())<0);
+    add("Mentions "+terms.join(", "), missing.length===0, missing.length ? "missing: "+missing.join(", ") : "");
+  }
+
+  const ids = CRITERIA.map(c=>c.id);
+  const valid = ids.every(id => p.scores[id] && p.scores[id].score>=1 && p.scores[id].score<=5);
+  add("All 8 scores returned and in range", valid, valid ? "" : "a criterion fell back to the default");
+  add("Model output parsed", degraded.length===0, degraded.length ? "fell back on: "+degraded.join(", ") : "");
+
+  const assumptions = ids.filter(id=>p.scores[id].assumption).length;
+  const maxA = parseInt(rules.max_assumptions, 10);
+  if(maxA >= 0 && rules.max_assumptions!=null) add(assumptions+" assumption"+(assumptions===1?"":"s")+" flagged", assumptions <= maxA, assumptions > maxA ? "limit is "+maxA : "");
+  else add(assumptions+" assumption"+(assumptions===1?"":"s")+" flagged", assumptions <= 3, assumptions > 3 ? "more than 3, the input is thin" : "");
+
+  const maxR = parseInt(rules.max_rationale_words, 10);
+  if(maxR > 0){
+    const long = ids.filter(id=>wc(p.scores[id].rationale) > maxR).length;
+    add("Rationales under "+maxR+" words", long===0, long ? long+" too long" : "");
+  }
+
+  add("Layer and AI Act tier set", !!(p.layer && LAYER_INFO[p.layer.id]) && !!(p.gov && TIERS[p.gov.tier]), "");
+
+  const {effort, benefit} = axisScores(p);
+  if(effort>=4 && benefit>=4){
+    const n = Array.isArray(p.schedule) ? p.schedule.length : 0;
+    let lo=4, hi=5;
+    if(rules.schedule_phases){ const m = rules.schedule_phases.match(/(\d+)\s*-\s*(\d+)/); if(m){ lo=+m[1]; hi=+m[2]; } else if(/^\d+$/.test(rules.schedule_phases)){ lo=hi=+rules.schedule_phases; } }
+    add("Build schedule has "+n+" phases", n>=lo && n<=hi, (n>=lo && n<=hi) ? "" : "expected "+lo+(hi!==lo?" to "+hi:""));
+  }
+  unknown.forEach(u => add("Rule not understood: "+u.slice(0,40), false, "use key: value with a supported key"));
+  return checks;
+}
+async function modelEval(desc, brief, p){
+  const g = p.guardrails || {det:[], non:[]};
+  const scoreLines = CRITERIA.map(c=>c.name+": "+p.scores[c.id].score+" ("+c.cats[p.scores[c.id].score]+") because "+p.scores[c.id].rationale+(p.scores[c.id].assumption?" [assumption]":"")).join("\n");
+  const sn = lines(guardrails.scanNon);
+  const prompt = "You are evaluating an automated scan of a business process for AI suitability. Judge three things strictly.\n\n"+
+    "1. INPUT: was the input good enough to score on? Does it say who runs the process, how often, the steps, the systems and the time it takes? Name what is missing.\n"+
+    "2. SCORING: do the scores and rationales follow from evidence in the input, or did the model guess or inflate? Are any rationales not supported by the text?"+
+    (sn.length ? " Also check these scanner rules were respected:\n- "+sn.join("\n- ") : "")+"\n"+
+    "3. GUARDRAILS: "+((g.det.length||g.non.length) ? "does the build plan (layer, schedule, risk) respect these process guardrails? Name any rule the plan ignores or contradicts.\nDeterministic:\n- "+(g.det.join("\n- ")||"none")+"\nNon deterministic:\n- "+(g.non.join("\n- ")||"none") : "no process guardrails were set, answer null for guardrails_ok.")+"\n\n"+
+    "INPUT (first part):\n"+desc.slice(0,3000)+"\n\nSCORES:\n"+scoreLines+"\n\nLAYER: "+(p.layer.id+" "+(LAYER_INFO[p.layer.id]||{}).name+", "+(p.layer.reason||""))+
+    "\nSCHEDULE: "+(p.schedule ? p.schedule.map(s=>s.t+": "+s.d).join(" | ") : "none")+
+    "\nRISK: "+(p.risk ? p.risk.what+" Fix: "+p.risk.fix : "none")+
+    "\n\nRespond with ONLY this JSON, no prose, no fences. Keep each note under 25 words and the summary under 45 words, written as one or two plain sentences a manager can read:\n"+
+    '{"input_ok":true,"input_note":"...","scoring_ok":true,"scoring_note":"...","guardrails_ok":null,"guardrails_note":"...","summary":"..."}';
+  return extractJSON(await callWithRetry(prompt));
+}
+function buildEval(checks, m){
+  const failed = checks.filter(c=>!c.ok);
+  let status = "pass";
+  if(m){
+    if(m.input_ok===false || m.scoring_ok===false || m.guardrails_ok===false) status = "warn";
+  } else status = "warn";
+  if(failed.some(c=>/parsed|in range/.test(c.label))) status = "fail";
+  else if(failed.length && status==="pass") status = "warn";
+  let sentence;
+  if(m && m.summary) sentence = m.summary;
+  else if(m) sentence = [m.input_note, m.scoring_note, m.guardrails_note].filter(Boolean).join(" ");
+  else sentence = "The model eval did not run, only the code checks below were applied.";
+  if(failed.length) sentence += " Code checks flagged: "+failed.map(c=>c.label.toLowerCase()+(c.note?" ("+c.note+")":"")).join("; ")+".";
+  return {status, sentence, checks, model: m ? {input_ok:m.input_ok, scoring_ok:m.scoring_ok, guardrails_ok:m.guardrails_ok} : null};
 }
 function defaults(axis){
   const out={};
@@ -473,8 +786,8 @@ $("scanBtn").addEventListener("click", async () => {
   const name = $("pname").value.trim(), desc = $("pdesc").value.trim();
   $("errBox").style.display = "none";
   if(!desc){ showError("Paste a process description first."); return; }
-  if(!apiKey()){ showError("Paste your Mistral API key in the field above first. It is stored only in this browser."); return; }
   let eS=null, bS=null, meta=null, degraded=[];
+  resetUsage();
   try{
     setStatus("Reading the input...", true);
     const brief = await condense(desc);
@@ -492,8 +805,19 @@ $("scanBtn").addEventListener("click", async () => {
       layer: (meta && meta.layer && LAYER_INFO[meta.layer.id]) ? meta.layer : {id:2, reason:"Not determined automatically. Set this yourself."},
       schedule: (meta && Array.isArray(meta.schedule) && meta.schedule.length) ? meta.schedule : null,
       risk: (meta && meta.risk && meta.risk.what) ? meta.risk : null,
-      gov: (meta && meta.gov && meta.gov.tier) ? meta.gov : null
+      gov: (meta && meta.gov && meta.gov.tier) ? meta.gov : null,
+      guardrails: guardSnapshot(),
+      eval: null,
+      cost: null
     };
+
+    setStatus("Running eval...", true);
+    const checks = deterministicChecks(desc, current, degraded);
+    let m = null;
+    try{ m = await modelEval(desc, brief, current); }catch(e){ m = null; }
+    current.eval = buildEval(checks, m);
+    current.cost = costSnapshot();
+
     renderResult();
     if(degraded.length) showError("Scanned, but part of it fell back to defaults ("+degraded.join(", ")+"). Those scores are marked as assumptions. Check and override them.");
   }catch(e){
@@ -574,6 +898,26 @@ function refreshVerdict(){
     $("govOb").innerHTML = "<b>What has to be in place:</b> "+esc(current.gov.ob || "");
     $("govFoot").textContent = t.date;
   } else gb.style.display="none";
+
+  const g = current.guardrails, gbx = $("guardBox");
+  if(g && (g.det.length || g.non.length)){
+    gbx.style.display="block";
+    const col = (title, arr, hint) => '<div><h5>'+title+'</h5>'+(arr.length ? '<ul>'+arr.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ul>' : '<div class="none">'+hint+'</div>')+'</div>';
+    $("guardCols").innerHTML = col("Deterministic, enforced in code", g.det, "No deterministic rules set.")+col("Non deterministic, checked by model or reviewer", g.non, "No non deterministic rules set.");
+  } else gbx.style.display="none";
+
+  const ev = current.eval, eb = $("evalBox");
+  if(ev){
+    eb.style.display="block";
+    eb.className = "box box-eval"+(ev.status==="pass"?"":" "+ev.status);
+    $("evalPill").textContent = ev.status==="pass" ? "Passed" : ev.status==="warn" ? "Check" : "Failed";
+    $("evalSent").textContent = ev.sentence;
+    $("evalChecks").innerHTML = (ev.checks||[]).map(c=>'<span class="chk '+(c.ok?"ok":"bad")+'" title="'+esc(c.note)+'">'+(c.ok?"&#10003; ":"&#10007; ")+esc(c.label)+'</span>').join("");
+  } else eb.style.display="none";
+
+  const cl = $("costLine");
+  if(current.cost){ cl.style.display="flex"; $("costText").innerHTML = costText(current.cost); }
+  else cl.style.display="none";
 }
 
 /* ================= ranking ================= */
@@ -649,6 +993,14 @@ function detailHTML(p){
       '<span class="tier" style="background:'+t.color+';margin:0 4px 0 0;padding:2px 8px;font-size:10px">'+t.label+'</span>'+esc(p.gov.why)+'</div>'; }
   if(p.schedule) extra += '<div style="margin-top:6px;font-size:12px"><b style="color:var(--green-dark)">Build schedule:</b> '+
     p.schedule.map(s=>esc(s.t||s.title||"")).join(" &#8594; ")+'</div>';
+  if(p.guardrails && (p.guardrails.det.length || p.guardrails.non.length))
+    extra += '<div style="margin-top:6px;font-size:12px"><b style="color:var(--brand)">Guardrails:</b> '+
+      p.guardrails.det.length+' deterministic, '+p.guardrails.non.length+' non deterministic. '+
+      esc([...p.guardrails.det, ...p.guardrails.non].slice(0,3).join(" / "))+(p.guardrails.det.length+p.guardrails.non.length>3?" / ...":"")+'</div>';
+  if(p.eval) extra += '<div style="margin-top:6px;font-size:12px"><b style="color:var(--navy)">EVAL:</b> '+
+    '<span class="ev-pill" style="background:'+(p.eval.status==="pass"?"#149E52":p.eval.status==="warn"?"#F5821F":"#8A9BA8")+';margin-right:6px">'+
+    (p.eval.status==="pass"?"Passed":p.eval.status==="warn"?"Check":"Failed")+'</span>'+esc(p.eval.sentence)+'</div>';
+  if(p.cost) extra += '<div style="margin-top:6px;font-size:12px;color:var(--grey)">'+costText(p.cost)+'</div>';
   return '<div class="detail-grid">'+col("effort")+col("benefit")+'</div>'+extra+
     '<div style="margin-top:12px"><button class="btn btn-ghost" data-edit="'+p.id+'" style="font-size:13px;padding:8px 16px">Edit scores</button></div>';
 }
@@ -694,21 +1046,77 @@ function renderMatrix(rows){
 }
 
 /* ================= persistence ================= */
-function persist(){
-  try{ localStorage.setItem("action-process-scan-v2", JSON.stringify(processes)); }catch(e){}
+/* No database. The ranking and the guardrails live in this browser only: in the
+   host storage when the page runs inside a Claude artifact, otherwise in localStorage.
+   Another browser or device starts empty. */
+const store = {
+  async get(k){
+    try{ if(window.storage){ const r = await window.storage.get(k); return r && r.value != null ? r.value : null; } }catch(e){}
+    try{ return localStorage.getItem(k); }catch(e){}
+    return null;
+  },
+  async set(k, v){
+    try{ if(window.storage){ await window.storage.set(k, v); return true; } }catch(e){}
+    try{ localStorage.setItem(k, v); return true; }catch(e){}
+    return false;
+  }
+};
+const PROC_KEY = "action-process-scan-v2";
+async function persist(){ try{ await store.set(PROC_KEY, JSON.stringify(processes)); }catch(e){} }
+async function persistGuardrails(){ try{ await store.set(GUARD_KEY, JSON.stringify(guardrails)); }catch(e){} }
+
+/* ================= guardrails window ================= */
+const GFIELDS = {procDet:"gProcDet", procNon:"gProcNon", scanDet:"gScanDet", scanNon:"gScanNon"};
+function fillGuardForm(){ Object.keys(GFIELDS).forEach(k => { $(GFIELDS[k]).value = guardrails[k] || ""; }); }
+function readGuardForm(){ const g = {}; Object.keys(GFIELDS).forEach(k => { g[k] = $(GFIELDS[k]).value; }); return g; }
+function refreshGuardBadge(){
+  const n = guardCount(guardrails), c = $("gearCnt");
+  c.textContent = n; c.className = "cnt"+(n?" on":"");
+  const note = $("grNote");
+  if(n){
+    const pd = lines(guardrails.procDet).length, pn = lines(guardrails.procNon).length, sd = lines(guardrails.scanDet).length, sn = lines(guardrails.scanNon).length;
+    note.innerHTML = "<b>Guardrails on.</b> Process: "+pd+" deterministic, "+pn+" non deterministic. Scanner: "+sd+" deterministic, "+sn+" non deterministic. They are sent with the scan and checked in the EVAL line.";
+    note.className = "gr-note on";
+  } else note.className = "gr-note";
 }
-(function restore(){
-  try{
-    const r = localStorage.getItem("action-process-scan-v2");
-    if(r) processes = JSON.parse(r);
-  }catch(e){}
-  try{
-    const k = localStorage.getItem(KEY_STORE);
-    if(k) $("mkey").value = k;
-  }catch(e){}
-  $("mkey").addEventListener("change", ()=>{
-    try{ localStorage.setItem(KEY_STORE, apiKey()); }catch(e){}
-  });
+function openGuard(tab){
+  fillGuardForm();
+  showTab(tab || "process");
+  $("guardModal").classList.add("on");
+  setTimeout(()=>{ const f = $("guardModal").querySelector(".tabpane.on textarea"); if(f) f.focus(); }, 30);
+}
+function closeGuard(){ $("guardModal").classList.remove("on"); $("gearBtn").focus(); }
+function showTab(name){
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("on", t.dataset.tab===name));
+  document.querySelectorAll(".tabpane").forEach(p => p.classList.toggle("on", p.id==="tab-"+name));
+}
+$("gearBtn").addEventListener("click", ()=>openGuard());
+$("guardClose").addEventListener("click", closeGuard);
+$("guardModal").addEventListener("click", e => { if(e.target===$("guardModal")) closeGuard(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && $("guardModal").classList.contains("on")) closeGuard(); });
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", ()=>showTab(t.dataset.tab)));
+$("guardSave").addEventListener("click", async ()=>{
+  guardrails = readGuardForm();
+  await persistGuardrails();
+  refreshGuardBadge();
+  closeGuard();
+});
+$("guardReset").addEventListener("click", ()=>{
+  Object.keys(GFIELDS).forEach(k => { $(GFIELDS[k]).value = ""; });
+});
+
+const KEY_KEY = "action-process-scan-mistral-key", MODEL_KEY = "action-process-scan-mistral-model";
+$("modelSel").addEventListener("change", async e => { MODEL = e.target.value; try{ await store.set(MODEL_KEY, MODEL); }catch(x){} });
+$("rememberKey").addEventListener("change", async e => {
+  try{ if(e.target.checked) await store.set(KEY_KEY, apiKey()); else await store.set(KEY_KEY, ""); }catch(x){}
+});
+$("apikey").addEventListener("change", async () => { if($("rememberKey").checked){ try{ await store.set(KEY_KEY, apiKey()); }catch(x){} } });
+(async function restore(){
+  try{ const m = await store.get(MODEL_KEY); if(m && PRICES[m]){ MODEL = m; $("modelSel").value = m; } }catch(e){}
+  try{ const k = await store.get(KEY_KEY); if(k){ $("apikey").value = k; $("rememberKey").checked = true; } }catch(e){}
+  try{ const r = await store.get(PROC_KEY); if(r) processes = JSON.parse(r); }catch(e){}
+  try{ const g = await store.get(GUARD_KEY); if(g) guardrails = Object.assign({procDet:"",procNon:"",scanDet:"",scanNon:""}, JSON.parse(g)); }catch(e){}
+  refreshGuardBadge();
   renderRanking();
 })();
 </script>
