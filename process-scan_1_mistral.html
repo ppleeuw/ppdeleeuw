@@ -415,7 +415,7 @@
   </section>
 
 </main>
-<footer>Effort is scored inverted, so 5 means easy to build. Verdict rule: effort 4.0 or higher and benefit 4.0 or higher gives Build now. One axis at 4.0 or higher gives Waitlist. Otherwise Not now. The EVAL line reports whether the input was sufficient, the model scored on evidence and the build plan respects the guardrails. The scan cost is actual token usage times the model's list price. Nothing leaves this browser except the calls to api.mistral.ai with your own key.</footer>
+<footer>Effort is scored inverted, so 5 means easy to build. Verdict rule: effort 4.0 or higher and benefit 4.0 or higher gives Build now. One axis at 4.0 or higher gives Waitlist. Otherwise Not now. The EVAL line reports whether the input was sufficient, the model scored on evidence and the build plan respects the guardrails. The scan cost is actual token usage times the model's list price. Nothing leaves this browser except the calls to api.mistral.ai with your own key, and the saved ranking going to its database.</footer>
 
 <script>
 /* ================= criteria ================= */
@@ -963,8 +963,10 @@ function renderRanking(){
   }));
   body.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click", e=>{
     e.stopPropagation();
-    processes = processes.filter(p=>p.id!==+e.target.dataset.del);
-    if(openRow===+e.target.dataset.del) openRow=null;
+    const delId = +e.target.dataset.del;
+    processes = processes.filter(p=>p.id!==delId);
+    if(openRow===delId) openRow=null;
+    if(sbReady()){ sbDelete(delId).catch(x=>console.warn(x)); }
     persist(); renderRanking();
   }));
   body.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click", e=>{
@@ -1062,7 +1064,42 @@ const store = {
   }
 };
 const PROC_KEY = "action-process-scan-v2";
-async function persist(){ try{ await store.set(PROC_KEY, JSON.stringify(processes)); }catch(e){} }
+
+/* ================= supabase ================= */
+/* Past processes live in a small Supabase table so the ranking survives across browsers
+   and devices. Fill in the project URL and anon key below; the table is created by
+   supabase/schema.sql in this repository. While the config is empty, or when Supabase is
+   unreachable, the page falls back to this browser's localStorage. The model API key is
+   kept in localStorage only and never written to Supabase. */
+const SUPABASE = { url: "", anonKey: "", site: "ppdeleeuw" };
+function sbReady(){ return !!(SUPABASE.url && SUPABASE.anonKey); }
+function sbHeaders(extra){
+  return Object.assign({"apikey":SUPABASE.anonKey, "Authorization":"Bearer "+SUPABASE.anonKey,
+    "Content-Type":"application/json"}, extra||{});
+}
+async function sbLoad(){
+  const r = await fetch(SUPABASE.url+"/rest/v1/processes?site=eq."+encodeURIComponent(SUPABASE.site)+"&select=data&order=id.asc",
+    {headers:sbHeaders()});
+  if(!r.ok) throw new Error("Supabase load failed: HTTP "+r.status);
+  return (await r.json()).map(row=>row.data);
+}
+async function sbUpsert(list){
+  if(!list.length) return;
+  const rows = list.map(p=>({id:p.id, site:SUPABASE.site, name:p.name||"", data:p}));
+  const r = await fetch(SUPABASE.url+"/rest/v1/processes?on_conflict=site,id",
+    {method:"POST", headers:sbHeaders({"Prefer":"resolution=merge-duplicates"}), body:JSON.stringify(rows)});
+  if(!r.ok) throw new Error("Supabase save failed: HTTP "+r.status);
+}
+async function sbDelete(id){
+  const r = await fetch(SUPABASE.url+"/rest/v1/processes?site=eq."+encodeURIComponent(SUPABASE.site)+"&id=eq."+id,
+    {method:"DELETE", headers:sbHeaders()});
+  if(!r.ok) throw new Error("Supabase delete failed: HTTP "+r.status);
+}
+
+async function persist(){
+  try{ await store.set(PROC_KEY, JSON.stringify(processes)); }catch(e){}
+  if(sbReady()){ try{ await sbUpsert(processes); }catch(e){ console.warn(e); } }
+}
 async function persistGuardrails(){ try{ await store.set(GUARD_KEY, JSON.stringify(guardrails)); }catch(e){} }
 
 /* ================= guardrails window ================= */
@@ -1114,7 +1151,17 @@ $("apikey").addEventListener("change", async () => { if($("rememberKey").checked
 (async function restore(){
   try{ const m = await store.get(MODEL_KEY); if(m && PRICES[m]){ MODEL = m; $("modelSel").value = m; } }catch(e){}
   try{ const k = await store.get(KEY_KEY); if(k){ $("apikey").value = k; $("rememberKey").checked = true; } }catch(e){}
-  try{ const r = await store.get(PROC_KEY); if(r) processes = JSON.parse(r); }catch(e){}
+  let fromDb = false;
+  if(sbReady()){
+    try{ processes = await sbLoad(); fromDb = true; }catch(e){ console.warn(e); }
+  }
+  if(!fromDb){
+    try{ const r = await store.get(PROC_KEY); if(r) processes = JSON.parse(r); }catch(e){}
+  } else if(!processes.length){
+    /* One-time migration: an empty table but a ranking in this browser means the page
+       ran on localStorage before the database existed. Move it over. */
+    try{ const r = await store.get(PROC_KEY); if(r){ const old = JSON.parse(r); if(old.length){ processes = old; await sbUpsert(old); } } }catch(e){}
+  }
   try{ const g = await store.get(GUARD_KEY); if(g) guardrails = Object.assign({procDet:"",procNon:"",scanDet:"",scanNon:""}, JSON.parse(g)); }catch(e){}
   refreshGuardBadge();
   renderRanking();
